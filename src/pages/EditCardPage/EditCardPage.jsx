@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   TextField,
@@ -30,8 +30,21 @@ const EditCardPage = () => {
     houseNumber: "",
     zip: "",
   });
+  const [fetchedCardData, setFetchedCardData] = useState(null);
   const { id: _id } = useParams();
-  // console.log(_id);
+  console.log(_id);
+  useEffect(() => {
+    const getCardById = async () => {
+      try {
+        const { data } = await axios.get("/cards/" + _id);
+        console.log(data);
+        setFetchedCardData(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getCardById();
+  }, [_id]);
   const handleInputChange = (e) => {
     setInputValue((currentState) => ({
       ...currentState,
@@ -65,6 +78,13 @@ const EditCardPage = () => {
       console.log("err", err.response);
     }
   };
+  const getPlaceholderValue = (fieldName) => {
+    const value =
+      fetchedCardData && fetchedCardData[fieldName]
+        ? fetchedCardData[fieldName]
+        : "";
+    return value;
+  };
   return (
     <Container sx={{ padding: "50px" }}>
       <Typography variant="h2" sx={{ mb: 1, padding: "10px", pb: "0px" }}>
@@ -82,15 +102,18 @@ const EditCardPage = () => {
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.title}
+          placeholder={getPlaceholderValue("title")}
           required
         />
         <TextField
           id="subtitle"
           label="SubTitle"
           variant="outlined"
+          def
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.subtitle}
+          placeholder={getPlaceholderValue("subtitle")}
           required
         />
         <TextField
@@ -100,6 +123,7 @@ const EditCardPage = () => {
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.phone}
+          placeholder={getPlaceholderValue("phone")}
           required
         />
         <TextField
@@ -109,6 +133,7 @@ const EditCardPage = () => {
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.description}
+          placeholder={getPlaceholderValue("description")}
           required
         />
         <TextField
@@ -118,6 +143,7 @@ const EditCardPage = () => {
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.web}
+          placeholder={getPlaceholderValue("web")}
         />
         <TextField
           id="mail"
@@ -126,6 +152,7 @@ const EditCardPage = () => {
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.mail}
+          placeholder={getPlaceholderValue("email")}
           required
         />
 
@@ -136,6 +163,7 @@ const EditCardPage = () => {
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.url}
+          placeholder={getPlaceholderValue("url")}
         />
         <TextField
           id="alt"
@@ -144,6 +172,7 @@ const EditCardPage = () => {
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.alt}
+          placeholder={getPlaceholderValue("alt")}
         />
 
         <TextField
@@ -153,6 +182,7 @@ const EditCardPage = () => {
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.state}
+          placeholder={getPlaceholderValue("state")}
         />
         <TextField
           id="country"
@@ -161,6 +191,7 @@ const EditCardPage = () => {
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.country}
+          placeholder={getPlaceholderValue("country")}
           required
         />
         <TextField
@@ -170,6 +201,7 @@ const EditCardPage = () => {
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.city}
+          placeholder={getPlaceholderValue("city")}
           required
         />
         <TextField
@@ -179,6 +211,7 @@ const EditCardPage = () => {
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.street}
+          placeholder={getPlaceholderValue("street")}
           required
         />
         <TextField
@@ -188,6 +221,7 @@ const EditCardPage = () => {
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
           value={inputsValue.houseNumber}
+          placeholder={getPlaceholderValue("houseNumber")}
           required
         />
         <TextField
@@ -196,6 +230,7 @@ const EditCardPage = () => {
           variant="outlined"
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
+          placeholder={getPlaceholderValue("zip")}
           value={inputsValue.zip}
         />
       </Grid>
@@ -226,9 +261,6 @@ const EditCardPage = () => {
           </Link>
         </Grid>
       </Grid>
-      <Paper elevation={1} variant="elevation">
-        Special thanks to Inon
-      </Paper>
     </Container>
   );
 };

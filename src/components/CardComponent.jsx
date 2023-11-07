@@ -9,29 +9,43 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import PhoneIcon from "@mui/icons-material/Phone";
+import InfoIcon from "@mui/icons-material/Info";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const CardComponent = ({
   _id,
+  user_id,
   title,
   subTitle,
+  description,
   phone,
   address,
+  email,
   img,
   alt,
   like,
   cardNumber,
   onDeleteCard,
   onEditCard,
+  onLikeCard,
 }) => {
-  // console.log("CardComponent");
+  const isLoggedIn = useSelector((store) => store.authSlice.loggedIn);
+
+  const userId = useSelector((store) => store.authSlice.userData?._id);
+  // console.log("user Id", userId); //65490fd5fdaa5dc6d5c353af
+  // console.log("id of card", _id);
+
+  const isOwner = userId === user_id;
+  console.log(isOwner);
   const handlePhoneClick = () => {
     console.log("you clicked on phone btn");
   };
+
   const handleDeleteCardClick = () => {
     console.log("_id to delete (CardComponent)", _id);
     onDeleteCard(_id);
@@ -39,6 +53,14 @@ const CardComponent = ({
   const handleClickEditCard = () => {
     // console.log("move to edit card page");
     onEditCard(_id);
+  };
+  const handleLikeCardClick = () => {
+    const cardDetails = {
+      title: title,
+      subtitle: subTitle,
+      description: description,
+      phone: phone,
+    };
   };
   return (
     <Card>
@@ -63,28 +85,32 @@ const CardComponent = ({
           </Typography>
           <Typography variant="body2">
             <Typography fontWeight="700" variant="subtitle1" component="span">
-              Card Number:{" "}
+              Card Number:{_id}
             </Typography>
             {cardNumber}
           </Typography>
         </Box>
         <Box display="flex" justifyContent="space-between">
-          <Box>
-            <IconButton onClick={handlePhoneClick}>
-              <PhoneIcon />
-            </IconButton>
-            <IconButton onClick={handleClickEditCard}>
-              <CreateIcon />
-            </IconButton>
-          </Box>
-          <Box>
-            <IconButton onClick={handleDeleteCardClick}>
-              <DeleteIcon />
-            </IconButton>
-            <IconButton>
-              <FavoriteIcon color={like ? "favActive" : ""} />
-            </IconButton>
-          </Box>
+          {isLoggedIn && (
+            <Box>
+              <IconButton onClick={handlePhoneClick}>
+                <InfoIcon />
+              </IconButton>
+              <IconButton>
+                <FavoriteIcon color={like ? "favActive" : ""} />
+              </IconButton>
+            </Box>
+          )}
+          {isOwner && (
+            <Box>
+              <IconButton onClick={handleDeleteCardClick}>
+                <DeleteIcon />
+              </IconButton>
+              <IconButton onClick={handleClickEditCard}>
+                <CreateIcon />
+              </IconButton>
+            </Box>
+          )}
         </Box>
       </CardContent>
     </Card>

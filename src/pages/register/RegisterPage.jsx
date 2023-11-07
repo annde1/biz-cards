@@ -37,9 +37,14 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const successfulRegistration = () => {
     toast.success("Your registration was successful! 😃", {
-      position: toast.POSITION.TOP_RIGHT,
+      position: "top-center",
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
     });
   };
   const handleInputsChange = (e) => {

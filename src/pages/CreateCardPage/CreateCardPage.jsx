@@ -8,9 +8,10 @@ import {
   Button,
   Paper,
 } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import axios from "axios";
+import { cardCratedToast } from "../../service/toastifyService";
 
 const CreateCardPage = () => {
   const [inputsValue, setInputValue] = useState({
@@ -30,8 +31,8 @@ const CreateCardPage = () => {
     houseNumber: "",
     zip: "",
   });
-  const { id: _id } = useParams();
-  // console.log(_id);
+
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     setInputValue((currentState) => ({
       ...currentState,
@@ -61,6 +62,8 @@ const CreateCardPage = () => {
         },
       });
       console.log("data from response", data);
+      cardCratedToast();
+      navigate(ROUTES.HOME);
     } catch (err) {
       console.log("err", err.response);
     }
@@ -68,10 +71,10 @@ const CreateCardPage = () => {
   return (
     <Container sx={{ padding: "50px" }}>
       <Typography variant="h2" sx={{ mb: 1, padding: "10px", pb: "0px" }}>
-        Card - Edit
+        Card - Create
       </Typography>
       <Typography variant="body1" sx={{ mb: 1, padding: "3px", ml: "7px" }}>
-        Put a new values in the correct input
+        Add card details below
       </Typography>
       <Divider sx={{ mb: 3 }} />
       <Grid container flexDirection={"column"}>
@@ -226,9 +229,6 @@ const CreateCardPage = () => {
           </Link>
         </Grid>
       </Grid>
-      <Paper elevation={1} variant="elevation">
-        Special thanks to Inon
-      </Paper>
     </Container>
   );
 };

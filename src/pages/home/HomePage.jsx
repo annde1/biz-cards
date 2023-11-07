@@ -8,6 +8,7 @@ import axios from "axios";
 import homePageNormalization from "./homePageNormalization";
 import { useSelector } from "react-redux";
 import useQueryParams from "../../hooks/useQueryParams";
+import { useParams } from "react-router-dom";
 
 let initialDataFromServer = [];
 
@@ -28,19 +29,19 @@ const HomePage = () => {
       .catch((err) => {
         console.log("err", err);
       });
-  }, []);
+  }, [userData]);
   useEffect(() => {
     if (!initialDataFromServer.length) return;
     const filter = query.filter ? query.filter : "";
-    console.log("filter", filter);
+    // console.log("filter", filter);
     setDataFromServer(
       initialDataFromServer.filter((card) => card.title.startsWith(filter))
     );
-  }, [query, initialDataFromServer]);
+  }, [query]);
   const handleDeleteCard = (_id) => {
     console.log("_id to delete (HomePage)", _id);
     setDataFromServer((dataFromServerCopy) =>
-      dataFromServerCopy.filter((card) => card._id != _id)
+      dataFromServerCopy.filter((card) => card._id !== _id)
     );
     // dataFromServer = dataFromServer.filter((card) => card._id != _id);
     //return true for all the cards that has id that not equal to the id we want to delete
@@ -50,6 +51,14 @@ const HomePage = () => {
     // console.log("id to edit", _id);
     navigate(`${ROUTES.EDITCARD}/${_id}`);
   };
+  const handleLikeCard = async (_id, cardDetails) => {
+    try {
+      const { data } = await axios.patch("/cards/" + _id, cardDetails);
+      console.log("Data from Like Card", data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Container>
@@ -58,9 +67,12 @@ const HomePage = () => {
           <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>
             <CardComponent
               _id={card._id}
+              user_id={card.user_id}
               title={card.title}
               subTitle={card.subtitle}
               phone={card.phone}
+              description={card.description}
+              email={card.email}
               address={`${card.address.city}, ${card.address.street} ${card.address.houseNumber}`}
               img={card.image.url}
               alt={card.image.alt}
@@ -68,6 +80,7 @@ const HomePage = () => {
               cardNumber={card.cardNumber}
               onDeleteCard={handleDeleteCard}
               onEditCard={handleEditCard}
+              onLikeCard={handleLikeCard}
             />
           </Grid>
         ))}

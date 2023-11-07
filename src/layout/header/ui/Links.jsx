@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const Links = () => {
   const loggedIn = useSelector((bigPie) => bigPie.authSlice.loggedIn);
   const isBusiness = useSelector(
-    (store) => store.authSlice.userData.isBusiness
+    (store) => store.authSlice.userData?.isBusiness
   );
   console.log(isBusiness);
   return (
