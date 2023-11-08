@@ -37,22 +37,34 @@ const FooterComponent = () => {
             onChange={(event, newValue) => {
               setValue(newValue);
             }}
+            style={{
+              backgroundColor: "#888582",
+              height: "5rem",
+            }}
           >
-            <Link to={ROUTES.FAVORITE}>
-              <BottomNavigationAction
-                label="Favorites"
-                icon={<FavoriteIcon />}
-              />
-            </Link>
-            <Link to={ROUTES.ABOUT}>
-              <BottomNavigationAction label="About" icon={<InfoIcon />} />
-            </Link>
-            <Link to={ROUTES.MYCARDS}>
-              <BottomNavigationAction
-                label="My Cards"
-                icon={<BusinessCenterIcon />}
-              />
-            </Link>
+            <BottomNavigationAction
+              label="Favorites"
+              icon={<FavoriteIcon style={{ color: "#f9f8f7" }} />}
+              to={ROUTES.FAVORITE}
+              component={Link}
+              style={{ color: "#f9f8f7" }}
+            />
+
+            <BottomNavigationAction
+              label="About"
+              icon={<InfoIcon style={{ color: "#f9f8f7" }} />}
+              component={Link}
+              to={ROUTES.ABOUT}
+              style={{ color: "#f9f8f7" }}
+            />
+
+            <BottomNavigationAction
+              label="My Cards"
+              icon={<BusinessCenterIcon style={{ color: "#f9f8f7" }} />}
+              to={ROUTES.MYCARDS}
+              component={Link}
+              style={{ color: "#f9f8f7" }}
+            />
           </BottomNavigation>
         </>
       )}
@@ -67,7 +79,10 @@ const FooterComponent = () => {
             }}
           >
             <Link to={ROUTES.ABOUT}>
-              <BottomNavigationAction label="About" icon={<InfoIcon />} />
+              <BottomNavigationAction
+                label="About"
+                icon={<InfoIcon style={{ color: "#f9f8f7" }} />}
+              />
             </Link>
           </BottomNavigation>
         </>

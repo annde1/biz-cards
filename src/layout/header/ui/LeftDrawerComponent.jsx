@@ -36,10 +36,15 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
       onClick={onCloseDrawer}
       onKeyDown={onCloseDrawer}
     >
-      <Typography variant="body1" style={{ textAlign: "center" }}>
+      <Typography
+        variant="body1"
+        style={{ textAlign: "center", marginTop: "1rem" }}
+      >
         Profile
       </Typography>
-      <Divider />
+      <Divider
+        sx={{ marginLeft: "1rem", marginRight: "1rem", marginTop: "1rem" }}
+      />
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem key={text} disablePadding>

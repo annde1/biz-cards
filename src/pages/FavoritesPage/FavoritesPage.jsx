@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import CardComponent from "../../components/CardComponent";
+import { Box } from "@mui/material";
 
 const FavoritesPage = () => {
   const [likedCards, setLikedCards] = useState([]);
@@ -28,10 +29,17 @@ const FavoritesPage = () => {
   const handleEditCard = () => {};
   return (
     <>
-      <Typography variant="h2">Favorite Cards</Typography>
-      <Typography variant="body1">
-        Here you can find your favorite bussiness cards
-      </Typography>
+      <Box
+        sx={{ marginTop: "3rem", marginBottom: "3rem", textAlign: "center" }}
+      >
+        <Typography variant="h2" sx={{ color: "#2d2c2b" }}>
+          Favorite Cards
+        </Typography>
+        <Typography variant="body1">
+          Here you can find your favorite bussiness cards
+        </Typography>
+      </Box>
+
       <Container>
         <Grid container spacing={2} justifyContent="center">
           {likedCards.map((card) => (
