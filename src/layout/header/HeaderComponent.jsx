@@ -70,7 +70,9 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
     //navigate to homepage
     navigate(ROUTES.HOME);
   };
-
+  const handleEditProfile = () => {
+    navigate(ROUTES.EDITPROFILE);
+  };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -91,7 +93,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
     >
       {isLoggedIn && (
         <Box>
-          <MenuItem onClick={handleMenuClose}>Edit profile</MenuItem>
+          <MenuItem onClick={handleEditProfile}>Edit profile</MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Box>
       )}
@@ -161,7 +163,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
 
   return (
     <Box sx={{ flexGrow: 1, mb: 2 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: "#888582" }}>
         <Toolbar>
           <IconButton
             size="large"

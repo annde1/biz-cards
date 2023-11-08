@@ -8,12 +8,27 @@ import {
   Button,
   Drawer,
   ListItemIcon,
+  Typography,
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { useState, Fragment } from "react";
+import {
+  loggedInLinks,
+  loggedOutLinks,
+  businessLinks,
+  alwaysLinks,
+} from "../../myLinks";
+import { useSelector } from "react-redux";
+import nextKey from "generate-my-key";
 
 const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
+  const isLoggedIn = useSelector((store) => store.authSlice.loggedIn);
+  const isBusiness = useSelector(
+    (store) => store.authSlice.userData?.isBusiness
+  );
+  console.log(isLoggedIn);
+  console.log(isBusiness);
   const list = () => (
     <Box
       sx={{ width: { auto: 550 } }}
@@ -21,6 +36,10 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
       onClick={onCloseDrawer}
       onKeyDown={onCloseDrawer}
     >
+      <Typography variant="body1" style={{ textAlign: "center" }}>
+        Profile
+      </Typography>
+      <Divider />
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem key={text} disablePadding>

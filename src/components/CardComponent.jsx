@@ -16,6 +16,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
+import ModalComponent from "./ModalComponent";
+import { current } from "@reduxjs/toolkit";
 
 const CardComponent = ({
   _id,
@@ -26,7 +29,14 @@ const CardComponent = ({
   phone,
   address,
   email,
+  web,
   img,
+  city,
+  street,
+  country,
+  houseNumber,
+  state,
+  zip,
   alt,
   like,
   cardNumber,
@@ -34,16 +44,17 @@ const CardComponent = ({
   onEditCard,
   onLikeCard,
 }) => {
+  const [isLiked, setIsLiked] = useState(like);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const isLoggedIn = useSelector((store) => store.authSlice.loggedIn);
-
   const userId = useSelector((store) => store.authSlice.userData?._id);
-  // console.log("user Id", userId); //65490fd5fdaa5dc6d5c353af
-  // console.log("id of card", _id);
-
   const isOwner = userId === user_id;
-  console.log(isOwner);
-  const handlePhoneClick = () => {
-    console.log("you clicked on phone btn");
+  // console.log(like);
+  const handleCloseModal = () => {
+    setIsOpenModal(false);
+  };
+  const handleOpenModal = () => {
+    setIsOpenModal(true);
   };
 
   const handleDeleteCardClick = () => {
@@ -54,13 +65,34 @@ const CardComponent = ({
     // console.log("move to edit card page");
     onEditCard(_id);
   };
-  const handleLikeCardClick = () => {
+  //TODO: Finish
+  const handleLikeCardClick = async () => {
     const cardDetails = {
       title: title,
       subtitle: subTitle,
       description: description,
       phone: phone,
+      email: email,
+      web: web,
+      image: {
+        url: img,
+        alt: alt,
+      },
+      address: {
+        state: state,
+        county: country,
+        city: city,
+        street: street,
+        houseNumber: houseNumber,
+        zip: zip,
+      },
     };
+    try {
+      await onLikeCard(_id, cardDetails);
+      setIsLiked((current) => !current);
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <Card>
@@ -91,13 +123,16 @@ const CardComponent = ({
           </Typography>
         </Box>
         <Box display="flex" justifyContent="space-between">
+          <IconButton onClick={handleOpenModal}>
+            <InfoIcon />
+          </IconButton>
+          {isOpenModal && ( // Conditional rendering of the ModalComponent
+            <ModalComponent open={isOpenModal} handleClose={handleCloseModal} />
+          )}
           {isLoggedIn && (
             <Box>
-              <IconButton onClick={handlePhoneClick}>
-                <InfoIcon />
-              </IconButton>
-              <IconButton>
-                <FavoriteIcon color={like ? "favActive" : ""} />
+              <IconButton onClick={handleLikeCardClick}>
+                <FavoriteIcon color={isLiked ? "favActive" : ""} />
               </IconButton>
             </Box>
           )}

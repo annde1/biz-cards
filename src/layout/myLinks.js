@@ -7,7 +7,7 @@ const myLinks = [
   { to: ROUTES.ABOUT, children: "About" },
 ];
 
-// const alwaysLinks = [{ to: ROUTES.HOME, children: "Home page" }];
+const alwaysLinks = [{ to: ROUTES.HOME, children: "Home page" }];
 const loggedInLinks = [
   { to: "/profile", children: "Profile page" },
   { to: ROUTES.FAVORITE, children: "Favorite Cards" },
@@ -26,4 +26,4 @@ const businessLinks = [
 //TODO: Bring back the always link, cause there is bug
 //TODO: Left drawer component (make it as navigation center) - make links. Make two sections for profile related stuff and card related stuff. Ask Yonatan if ok, if NavBar link of be there (instead the Hamburger manu)
 export default myLinks;
-export { loggedInLinks, loggedOutLinks, businessLinks };
+export { loggedInLinks, loggedOutLinks, businessLinks, alwaysLinks };

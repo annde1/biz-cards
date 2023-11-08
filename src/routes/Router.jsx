@@ -26,6 +26,7 @@ import FavoritesPage from "../pages/FavoritesPage/FavoritesPage";
 import AuthGuard from "../Guard/AuthGuard";
 import BizGuard from "../Guard/BizGuard";
 import MyCardsPage from "../pages/MyCardsPage/MyCardsPage";
+import EditProfilePage from "../pages/EditProfilePage/EditProfilePage";
 
 const Router = () => {
   return (
@@ -55,6 +56,7 @@ const Router = () => {
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.FAVORITE} element={<FavoritesPage />} />
       <Route path={ROUTES.MYCARDS} element={<MyCardsPage />} />
+      <Route path={ROUTES.EDITPROFILE} element={<EditProfilePage />} />
       <Route path="/l9">
         <Route path="render" element={<RenderPage9 />} />
         <Route path="callback" element={<AnimalComponent />} />

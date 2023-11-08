@@ -14,9 +14,9 @@ const LayoutComponent = ({ children }) => {
   const dispatch = useDispatch();
 
   const themes = tmc({
-    "text.headerColor": "!#b219e6",
-    "text.headerActive": "#9e165c",
-    favActive: "*#FB0000",
+    "text.headerColor": "#171616",
+    "text.headerActive": "#f9f8f7",
+    favActive: "*#be1700",
   });
   // console.log("themes", themes);
   // const themes = tmc({ primary: "#00FF00", elisheva: "#FF0000" });

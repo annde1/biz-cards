@@ -26,8 +26,6 @@ const FooterComponent = () => {
     (store) => store.authSlice.userData?.isBusiness
   );
 
-  console.log(isLoggedIn);
-  console.log(isBusiness);
   return (
     <div style={{ marginTop: "3rem" }}>
       {isLoggedIn && isBusiness && (

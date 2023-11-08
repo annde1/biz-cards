@@ -16,11 +16,13 @@ const HomePage = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
   const navigate = useNavigate();
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
+  console.log(userData);
   const query = useQueryParams();
   useEffect(() => {
     axios
       .get("/cards")
       .then(({ data }) => {
+        console.log(data);
         if (userData) data = homePageNormalization(data, userData._id);
         console.log("data", data);
         initialDataFromServer = data;
@@ -56,7 +58,7 @@ const HomePage = () => {
       const { data } = await axios.patch("/cards/" + _id, cardDetails);
       console.log("Data from Like Card", data);
     } catch (err) {
-      console.log(err);
+      console.log("Error from like card", err);
     }
   };
 
@@ -73,9 +75,15 @@ const HomePage = () => {
               phone={card.phone}
               description={card.description}
               email={card.email}
-              address={`${card.address.city}, ${card.address.street} ${card.address.houseNumber}`}
+              address={`${card.address.city}, ${card.address.street} ${card.address.houseNumber}, ${card.address.state}`}
+              city={card.address.city}
+              street={card.address.street}
+              houseNumber={card.address.houseNumber}
+              state={card.address.state}
+              zip={card.address.zip}
               img={card.image.url}
               alt={card.image.alt}
+              web={card.web}
               like={card.likes}
               cardNumber={card.cardNumber}
               onDeleteCard={handleDeleteCard}
