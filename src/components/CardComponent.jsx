@@ -89,7 +89,8 @@ const CardComponent = ({
     };
     try {
       await onLikeCard(_id, cardDetails);
-      setIsLiked((current) => !current);
+      setIsLiked(!isLiked);
+      console.log(isLiked);
     } catch (err) {
       console.log(err);
     }
@@ -117,9 +118,9 @@ const CardComponent = ({
           </Typography>
           <Typography variant="body2">
             <Typography fontWeight="700" variant="subtitle1" component="span">
-              Card Number:{_id}
+              Email:{" "}
             </Typography>
-            {cardNumber}
+            {email}
           </Typography>
         </Box>
         <Box display="flex" justifyContent="space-between">
@@ -127,7 +128,20 @@ const CardComponent = ({
             <InfoIcon />
           </IconButton>
           {isOpenModal && ( // Conditional rendering of the ModalComponent
-            <ModalComponent open={isOpenModal} handleClose={handleCloseModal} />
+            <ModalComponent
+              open={isOpenModal}
+              handleClose={handleCloseModal}
+              description={description}
+              image={img}
+              title={title}
+              subtitle={subTitle}
+              web={web}
+              city={city}
+              houseNumber={houseNumber}
+              country={country}
+              street={street}
+              email={email}
+            />
           )}
           {isLoggedIn && (
             <Box>

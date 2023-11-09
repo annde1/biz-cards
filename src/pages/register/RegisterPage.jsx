@@ -15,6 +15,7 @@ import { normalizeData } from "./normalizeData";
 import { validateRegister } from "../../validation/registerValidation";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
+import { Alert } from "@mui/material";
 
 const RegisterPage = () => {
   const [inputsValue, setInputsValue] = useState({
@@ -34,6 +35,8 @@ const RegisterPage = () => {
     zip: "",
     isBusiness: true,
   });
+
+  const [error, setError] = useState({});
   const navigate = useNavigate();
   const successfulRegistration = () => {
     toast.success("Your registration was successful! 😃", {
@@ -67,6 +70,8 @@ const RegisterPage = () => {
       // inputsValue.isBusiness = false;
       const errors = validateRegister(inputsValue);
       console.log(errors);
+      setError(errors);
+      console.log(errors);
       if (errors) return;
       let request = normalizeData(inputsValue);
       const { data } = await axios.post("/users", request);
@@ -87,7 +92,7 @@ const RegisterPage = () => {
         alignItems: "center",
       }}
     >
-      <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+      <Avatar sx={{ m: 1, bgcolor: "#716f6d" }}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
@@ -107,7 +112,11 @@ const RegisterPage = () => {
               value={inputsValue.first}
               onChange={handleInputsChange}
             />
+            {error && error.first && (
+              <Alert severity="warning">{error.first}</Alert>
+            )}
           </Grid>
+
           <Grid item xs={12} sm={4}>
             <TextField
               autoComplete="given-name"
@@ -131,6 +140,9 @@ const RegisterPage = () => {
               value={inputsValue.last}
               onChange={handleInputsChange}
             />
+            {error && error.last && (
+              <Alert severity="warning">{error.last}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -143,6 +155,9 @@ const RegisterPage = () => {
               value={inputsValue.email}
               onChange={handleInputsChange}
             />
+            {error && error.email && (
+              <Alert severity="warning">{error.email}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -156,6 +171,9 @@ const RegisterPage = () => {
               value={inputsValue.password}
               onChange={handleInputsChange}
             />
+            {error && error.password && (
+              <Alert severity="warning">{error.password}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -168,6 +186,9 @@ const RegisterPage = () => {
               value={inputsValue.phone}
               onChange={handleInputsChange}
             />
+            {error && error.phone && (
+              <Alert severity="warning">{error.phone}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -213,6 +234,9 @@ const RegisterPage = () => {
               value={inputsValue.country}
               onChange={handleInputsChange}
             />
+            {error && error.country && (
+              <Alert severity="warning">{error.country}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -225,6 +249,9 @@ const RegisterPage = () => {
               value={inputsValue.city}
               onChange={handleInputsChange}
             />
+            {error && error.city && (
+              <Alert severity="warning">{error.city}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -237,6 +264,9 @@ const RegisterPage = () => {
               value={inputsValue.street}
               onChange={handleInputsChange}
             />
+            {error && error.street && (
+              <Alert severity="warning">{error.street}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -249,6 +279,9 @@ const RegisterPage = () => {
               value={inputsValue.houseNumber}
               onChange={handleInputsChange}
             />
+            {error && error.houseNumber && (
+              <Alert severity="warning">{error.houseNumber}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -278,13 +311,13 @@ const RegisterPage = () => {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{ mt: 3, mb: 2, bgcolor: "#716f6d" }}
         >
           Sign Up
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link href="#" variant="body2">
+            <Link href="#" variant="body2" style={{ color: "#716f6d" }}>
               Already have an account? Sign in
             </Link>
           </Grid>

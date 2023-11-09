@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Container, Grid } from "@mui/material";
-import nextKey from "generate-my-key";
 import CardComponent from "../../components/CardComponent";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
@@ -8,9 +7,9 @@ import axios from "axios";
 import homePageNormalization from "./homePageNormalization";
 import { useSelector } from "react-redux";
 import useQueryParams from "../../hooks/useQueryParams";
-import { useParams } from "react-router-dom";
 
 let initialDataFromServer = [];
+// let likedCards = [];
 
 const HomePage = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
@@ -22,9 +21,19 @@ const HomePage = () => {
     axios
       .get("/cards")
       .then(({ data }) => {
+        console.log("The data is: ", data);
+        if (userData) {
+          // If user is logged in mutate the data (likes --> boolean)
+          // likedCards = data
+          //   .filter((card) => card.likes.includes(userData._id))
+          //   .map((card) => card._id);
+          data = homePageNormalization(data, userData._id);
+          // setLikedCards(likedCardz);
+        }
+        return data;
+      })
+      .then((data) => {
         console.log(data);
-        if (userData) data = homePageNormalization(data, userData._id);
-        console.log("data", data);
         initialDataFromServer = data;
         setDataFromServer(data);
       })

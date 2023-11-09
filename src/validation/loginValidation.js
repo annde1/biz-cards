@@ -12,9 +12,8 @@ const loginSchema = Joi.object({
       )
     )
     .messages({
-      "string.pattern.base": "the password should be...",
-      "string.empty":
-        "password must be filled with something that you will forget",
+      "string.pattern.base": "The password is incorrect",
+      "string.empty": "Looks like you forgot your password",
     })
     .min(2)
     .max(20)

@@ -4,18 +4,39 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
+import { Divider } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import { Description } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
+import Link from "@mui/material/Link";
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: "#f9f8f7",
+  // border: "2px solid #000",
+  borderRadius: "10px",
   boxShadow: 24,
   p: 4,
 };
-const ModalComponent = ({ open, handleClose }) => {
+const ModalComponent = ({
+  open,
+  handleClose,
+  address,
+  description,
+  image,
+  title,
+  subtitle,
+  web,
+  street,
+  houseNumber,
+  city,
+  country,
+  email,
+}) => {
+  console.log(address);
   return (
     <div>
       <Modal
@@ -25,12 +46,88 @@ const ModalComponent = ({ open, handleClose }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+          <Typography variant="h5" sx={{ textAlign: "center" }}>
+            Details
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <Divider
+            sx={{
+              marginTop: "1rem",
+              marginBottom: "0.6rem",
+            }}
+          />
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "0.6rem",
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold" }}>Titlte:</Typography>
+            <Typography>{title}</Typography>
+          </Box>
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "0.6rem",
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold" }}>Description:</Typography>
+            <Typography>{description}</Typography>
+          </Box>
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "1rem",
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold" }}>Address:</Typography>
+            <Typography>
+              {street}, {houseNumber},{city}
+            </Typography>
+          </Box>
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "0.6rem",
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold" }}>Web:</Typography>
+            {web ? (
+              <Link href={web}>{web}</Link>
+            ) : (
+              <Typography>
+                {"This business didn't specify web address"}
+              </Typography>
+            )}
+          </Box>
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "0.6rem",
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold" }}>Email:</Typography>
+            {email ? (
+              <Typography>{email}</Typography>
+            ) : (
+              <Typography>
+                {"This business didn't specify web address"}
+              </Typography>
+            )}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "2rem",
+            }}
+          >
+            <Button variant="outlined">Close</Button>
+          </Box>
         </Box>
       </Modal>
     </div>

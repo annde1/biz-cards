@@ -13,12 +13,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { loginToast } from "../../service/toastifyService";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-import { useDispatch } from "react-redux";
-import { authActions } from "../../store/authSlice";
-import CopyrightComponent from "./ui/CopyrightComponent";
 import ROUTES from "../../routes/ROUTES";
 import { validateLogin } from "../../validation/loginValidation";
 import { Alert } from "@mui/material";
@@ -26,21 +22,13 @@ import useAutoLogin from "../../hooks/useAutoLogin";
 import { storeToken } from "../../service/storageService";
 
 const LoginPage = () => {
-  /* top lvl for hooks */
-  /*   
-   let emailArrState = useState("")
-   emailArrState[0] -> value of current state, in our case ""
-   emailArrState[1] -> function to sync dom and virtual dom
-   !we never modify emailArrState[0] 
-   */
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
   const [errorsState, setErrorsState] = useState(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const autoLogin = useAutoLogin();
-  /* logic lvl for js */
+
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
@@ -57,20 +45,12 @@ const LoginPage = () => {
       });
       storeToken(data, rememberMe);
       console.log("data from login", data);
-      toast("You logged in successfully 👌", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      loginToast();
       autoLogin(true); //skip token test
       navigate(ROUTES.HOME);
     } catch (err) {
-      console.log("err from login", err);
+      console.log("err from login", err.response.status);
+      if (err.response.status === 400) setErrorsState(err.response.data);
     }
   };
   const handleEmailInputChange = (e) => {
@@ -112,7 +92,7 @@ const LoginPage = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "#716f6d" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -169,23 +149,17 @@ const LoginPage = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, bgcolor: "#716f6d" }}
             >
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2" style={{ color: "#000000" }}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
-            <CopyrightComponent sx={{ mt: 5 }} />
           </Box>
         </Box>
       </Grid>
