@@ -7,6 +7,7 @@ import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import InfoIcon from "@mui/icons-material/Info";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import AddIcon from "@mui/icons-material/Add";
+import HomeIcon from "@mui/icons-material/Home";
 const getIcon = (to) => {
   switch (to) {
     case ROUTES.LOGIN:
@@ -23,6 +24,8 @@ const getIcon = (to) => {
       return <EditNoteIcon />;
     case ROUTES.CREATECARD:
       return <AddIcon />;
+    case ROUTES.HOME:
+      return <HomeIcon />;
 
     default:
       return null; // For routes with no specific icon

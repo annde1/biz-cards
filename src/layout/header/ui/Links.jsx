@@ -1,6 +1,11 @@
 import { Box } from "@mui/material";
 import nextKey from "generate-my-key";
-import { loggedInLinks, loggedOutLinks, businessLinks } from "../../myLinks";
+import {
+  loggedInLinks,
+  loggedOutLinks,
+  businessLinks,
+  adminLinks,
+} from "../../myLinks";
 import NavLinkComponent from "../NavLinkComponent";
 import { useSelector } from "react-redux";
 
@@ -9,7 +14,11 @@ const Links = () => {
   const isBusiness = useSelector(
     (store) => store.authSlice.userData?.isBusiness
   );
+  const isAdmin = useSelector((store) => store.authSlice.userData?.isAdmin);
+  const userData = useSelector((store) => store.authSlice.userData);
   console.log(isBusiness);
+  console.log(userData);
+  console.log(isAdmin);
   return (
     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
       {loggedIn &&
@@ -27,6 +36,12 @@ const Links = () => {
       {loggedIn &&
         isBusiness &&
         businessLinks.map((item) => (
+          <NavLinkComponent to={item.to} key={nextKey()}>
+            {item.children}
+          </NavLinkComponent>
+        ))}
+      {isAdmin &&
+        adminLinks.map((item) => (
           <NavLinkComponent to={item.to} key={nextKey()}>
             {item.children}
           </NavLinkComponent>

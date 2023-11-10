@@ -4,9 +4,11 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import CardComponent from "../../components/CardComponent";
 import { Box } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const FavoritesPage = () => {
   const [likedCards, setLikedCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const userId = useSelector((store) => store.authSlice.userData?._id);
   console.log(userId);
   useEffect(() => {
@@ -18,6 +20,7 @@ const FavoritesPage = () => {
         console.log(likedCards);
         setLikedCards(likedCards);
         console.log(likedCards);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -39,7 +42,11 @@ const FavoritesPage = () => {
           Here you can find your favorite bussiness cards
         </Typography>
       </Box>
-
+      {isLoading && (
+        <Box sx={{ width: "100%", textAlign: "center" }}>
+          <CircularProgress />
+        </Box>
+      )}
       <Container>
         <Grid container spacing={2} justifyContent="center">
           {likedCards.map((card) => (

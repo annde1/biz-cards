@@ -7,20 +7,20 @@ import {
   Divider,
   Button,
   Drawer,
-  ListItemIcon,
   Typography,
 } from "@mui/material";
-import InboxIcon from "@mui/icons-material/Inbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { useState, Fragment } from "react";
+import LogoutIcon from "@mui/icons-material/Logout";
 import {
-  loggedInLinks,
-  loggedOutLinks,
-  businessLinks,
+  profileLinks,
+  loggedOutProfileLinks,
+  cardsLinkBusiness,
+  cardsLinkNotBusiness,
   alwaysLinks,
 } from "../../myLinks";
 import { useSelector } from "react-redux";
 import nextKey from "generate-my-key";
+import getIcon from "../../../service/iconsService";
+import Link from "@mui/material/Link";
 
 const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
   const isLoggedIn = useSelector((store) => store.authSlice.loggedIn);
@@ -31,7 +31,13 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
   console.log(isBusiness);
   const list = () => (
     <Box
-      sx={{ width: { auto: 550 } }}
+      sx={{
+        width: 200,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        bgcolor: "#f3f1f0",
+      }}
       role="presentation"
       onClick={onCloseDrawer}
       onKeyDown={onCloseDrawer}
@@ -46,13 +52,73 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
         sx={{ marginLeft: "1rem", marginRight: "1rem", marginTop: "1rem" }}
       />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+        {isLoggedIn &&
+          profileLinks.map((link) => (
+            <ListItem key={link.to} disablePadding>
+              <ListItemButton component={Link} to={link.to}>
+                <ListItemText primary={link.children} />
+                {getIcon(link.to)}
+              </ListItemButton>
+            </ListItem>
+          ))}
+        {!isLoggedIn &&
+          loggedOutProfileLinks.map((link) => (
+            <ListItem key={link.to} disablePadding>
+              <ListItemButton component={Link} to={link.to}>
+                <ListItemText primary={link.children} />
+                {getIcon(link.to)}
+              </ListItemButton>
+            </ListItem>
+          ))}
+      </List>
+      <Typography
+        variant="body1"
+        style={{ textAlign: "center", marginTop: "1rem" }}
+      >
+        Cards
+      </Typography>
+      <Divider
+        sx={{ marginLeft: "1rem", marginRight: "1rem", marginTop: "1rem" }}
+      />
+      <List>
+        {isBusiness &&
+          isLoggedIn &&
+          cardsLinkBusiness.map((link) => (
+            <ListItem key={link.to} disablePadding>
+              <ListItemButton component={Link} to={link.to}>
+                <ListItemText primary={link.children} />
+                {getIcon(link.to)}
+              </ListItemButton>
+            </ListItem>
+          ))}
+      </List>
+      <List>
+        {!isBusiness &&
+          isLoggedIn &&
+          cardsLinkNotBusiness.map((link) => (
+            <ListItem key={link.to} disablePadding>
+              <ListItemButton component={Link} to={link.to}>
+                <ListItemText primary={link.children} />
+                {getIcon(link.to)}
+              </ListItemButton>
+            </ListItem>
+          ))}
+      </List>
+      <Typography
+        variant="body1"
+        style={{ textAlign: "center", marginTop: "1rem" }}
+      >
+        Main
+      </Typography>
+      <Divider
+        sx={{ marginLeft: "1rem", marginRight: "1rem", marginTop: "1rem" }}
+      />
+      <List>
+        {alwaysLinks.map((link) => (
+          <ListItem key={link.to} disablePadding>
+            <ListItemButton component={Link} to={link.to}>
+              <ListItemText primary={link.children} />
+              {getIcon(link.to)}
             </ListItemButton>
           </ListItem>
         ))}

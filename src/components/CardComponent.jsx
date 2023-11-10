@@ -58,7 +58,6 @@ const CardComponent = ({
   };
 
   const handleDeleteCardClick = () => {
-    console.log("_id to delete (CardComponent)", _id);
     onDeleteCard(_id);
   };
   const handleClickEditCard = () => {
@@ -150,7 +149,7 @@ const CardComponent = ({
               </IconButton>
             </Box>
           )}
-          {isOwner && (
+          {isOwner && isLoggedIn && (
             <Box>
               <IconButton onClick={handleDeleteCardClick}>
                 <DeleteIcon />

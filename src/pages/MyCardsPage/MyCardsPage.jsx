@@ -7,9 +7,11 @@ import CardComponent from "../../components/CardComponent";
 import { useSelector } from "react-redux";
 import homePageNormalization from "../home/homePageNormalization";
 import { current } from "@reduxjs/toolkit";
-
+import LinearProgress from "@mui/material/LinearProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 const MyCardsPage = () => {
   const [myCards, setMyCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
   useEffect(() => {
     const getMyCards = async () => {
@@ -18,6 +20,7 @@ const MyCardsPage = () => {
         console.log(data);
         if (userData) homePageNormalization(data, userData._id);
         setMyCards(data);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -34,6 +37,11 @@ const MyCardsPage = () => {
         <Typography variant="body2">
           Here you can see all of your cards
         </Typography>
+        {isLoading && (
+          <Box sx={{ width: "100%" }}>
+            <CircularProgress />
+          </Box>
+        )}
         <Container>
           <Grid container spacing={2} justifyContent="center">
             {myCards.map((card) => (

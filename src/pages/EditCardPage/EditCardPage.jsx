@@ -52,6 +52,7 @@ const EditCardPage = () => {
     }));
   };
   const handleUpdateChangesClick = async () => {
+    //TODO: normalization for data
     try {
       const { data } = await axios.put("/cards/" + _id, {
         title: inputsValue.title,
@@ -87,173 +88,211 @@ const EditCardPage = () => {
   };
   return (
     <Container sx={{ padding: "50px" }}>
-      <Typography variant="h2" sx={{ mb: 1, padding: "10px", pb: "0px" }}>
+      <Typography
+        variant="h2"
+        sx={{ mb: 1, padding: "10px", pb: "0px", textAlign: "center" }}
+      >
         Card - Edit
       </Typography>
-      <Typography variant="body1" sx={{ mb: 1, padding: "3px", ml: "7px" }}>
-        Put a new values in the correct input
+      <Typography
+        variant="body1"
+        sx={{ mb: 2, padding: "3px", ml: "7px", textAlign: "center" }}
+      >
+        Please type new values below to edit the card
       </Typography>
-      <Divider sx={{ mb: 3 }} />
-      <Grid container flexDirection={"column"}>
-        <TextField
-          id="title"
-          label="Title"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.title}
-          placeholder={getPlaceholderValue("title")}
-          required
-        />
-        <TextField
-          id="subtitle"
-          label="SubTitle"
-          variant="outlined"
-          def
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.subtitle}
-          placeholder={getPlaceholderValue("subtitle")}
-          required
-        />
-        <TextField
-          id="phone"
-          label="Phone Number"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.phone}
-          placeholder={getPlaceholderValue("phone")}
-          required
-        />
-        <TextField
-          id="description"
-          label="Description"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.description}
-          placeholder={getPlaceholderValue("description")}
-          required
-        />
-        <TextField
-          id="web"
-          label="Web"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.web}
-          placeholder={getPlaceholderValue("web")}
-        />
-        <TextField
-          id="mail"
-          label="Email"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.mail}
-          placeholder={getPlaceholderValue("email")}
-          required
-        />
 
-        <TextField
-          id="url"
-          label="Url"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.url}
-          placeholder={getPlaceholderValue("url")}
-        />
-        <TextField
-          id="alt"
-          label="Alt"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.alt}
-          placeholder={getPlaceholderValue("alt")}
-        />
-
-        <TextField
-          id="state"
-          label="State"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.state}
-          placeholder={getPlaceholderValue("state")}
-        />
-        <TextField
-          id="country"
-          label="Country"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.country}
-          placeholder={getPlaceholderValue("country")}
-          required
-        />
-        <TextField
-          id="city"
-          label="City"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.city}
-          placeholder={getPlaceholderValue("city")}
-          required
-        />
-        <TextField
-          id="street"
-          label="Street"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.street}
-          placeholder={getPlaceholderValue("street")}
-          required
-        />
-        <TextField
-          id="houseNumber"
-          label="House Number"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.houseNumber}
-          placeholder={getPlaceholderValue("houseNumber")}
-          required
-        />
-        <TextField
-          id="zip"
-          label="Zip"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          placeholder={getPlaceholderValue("zip")}
-          value={inputsValue.zip}
-        />
+      <Grid container spacing={2}>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="title"
+            label="Title"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.title}
+            placeholder={getPlaceholderValue("title")}
+            required
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="subtitle"
+            label="SubTitle"
+            variant="outlined"
+            def
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.subtitle}
+            placeholder={getPlaceholderValue("subtitle")}
+            required
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="phone"
+            label="Phone Number"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.phone}
+            placeholder={getPlaceholderValue("phone")}
+            required
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="description"
+            label="Description"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.description}
+            placeholder={getPlaceholderValue("description")}
+            required
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="web"
+            label="Web"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.web}
+            placeholder={getPlaceholderValue("web")}
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="mail"
+            label="Email"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.mail}
+            placeholder={getPlaceholderValue("email")}
+            required
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="url"
+            label="Url"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.url}
+            placeholder={getPlaceholderValue("url")}
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="alt"
+            label="Alt"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.alt}
+            placeholder={getPlaceholderValue("alt")}
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="state"
+            label="State"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.state}
+            placeholder={getPlaceholderValue("state")}
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="country"
+            label="Country"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.country}
+            placeholder={getPlaceholderValue("country")}
+            required
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="city"
+            label="City"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.city}
+            placeholder={getPlaceholderValue("city")}
+            required
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="street"
+            label="Street"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.street}
+            placeholder={getPlaceholderValue("street")}
+            required
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="houseNumber"
+            label="House Number"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            value={inputsValue.houseNumber}
+            placeholder={getPlaceholderValue("houseNumber")}
+            required
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <TextField
+            id="zip"
+            label="Zip"
+            variant="outlined"
+            sx={{ mt: "10px", width: "100%" }}
+            onChange={handleInputChange}
+            placeholder={getPlaceholderValue("zip")}
+            value={inputsValue.zip}
+          />
+        </Grid>
       </Grid>
       <Grid container spacing={2}>
-        <Grid item lg={8} md={8} sm={8} xs>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
           <Button
-            variant="outlined"
-            sx={{ mt: 2, width: "100%", ml: "0%", bgcolor: "lightskyblue" }}
+            variant="contained"
+            sx={{
+              mt: 2,
+              width: "100%",
+              ml: "0%",
+              bgcolor: "#716f6d",
+              color: "white",
+            }}
             onClick={handleUpdateChangesClick}
           >
             Update Changes
           </Button>
         </Grid>
-        <Grid item xs>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
           <Link to={ROUTES.HOME}>
             <Button
-              variant="outlined"
+              variant="contained"
               sx={{
                 mt: 2,
                 width: "100%",
                 ml: "0%",
-                bgcolor: "navy",
-                color: "gray",
+                bgcolor: "#716f6d",
+                color: "white",
               }}
             >
               Discard Changes

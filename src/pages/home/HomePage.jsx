@@ -15,13 +15,13 @@ const HomePage = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
   const navigate = useNavigate();
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
-  console.log(userData);
+  // console.log(userData);
   const query = useQueryParams();
   useEffect(() => {
     axios
       .get("/cards")
       .then(({ data }) => {
-        console.log("The data is: ", data);
+        // console.log("The data is: ", data);
         if (userData) {
           // If user is logged in mutate the data (likes --> boolean)
           // likedCards = data
@@ -33,7 +33,7 @@ const HomePage = () => {
         return data;
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         initialDataFromServer = data;
         setDataFromServer(data);
       })
@@ -49,14 +49,16 @@ const HomePage = () => {
       initialDataFromServer.filter((card) => card.title.startsWith(filter))
     );
   }, [query]);
-  const handleDeleteCard = (_id) => {
-    console.log("_id to delete (HomePage)", _id);
-    setDataFromServer((dataFromServerCopy) =>
-      dataFromServerCopy.filter((card) => card._id !== _id)
-    );
-    // dataFromServer = dataFromServer.filter((card) => card._id != _id);
-    //return true for all the cards that has id that not equal to the id we want to delete
-    // console.log("dataFromServer", dataFromServer);
+  const handleDeleteCard = async (_id) => {
+    try {
+      const { data } = await axios.delete("/cards/" + _id);
+      console.log("Card Deleted", data);
+      setDataFromServer((dataFromServerCopy) =>
+        dataFromServerCopy.filter((card) => card._id !== _id)
+      );
+    } catch (err) {
+      console.log("Error From Delete Card", err);
+    }
   };
   const handleEditCard = (_id) => {
     // console.log("id to edit", _id);
