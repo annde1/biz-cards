@@ -37,4 +37,16 @@ const updateProfileToast = () => {
     theme: "light",
   });
 };
-export { cardCratedToast, loginToast, updateProfileToast };
+const deleteProfileToast = () => {
+  toast.success("Your account was deleted", {
+    position: "top-right",
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+};
+export { cardCratedToast, loginToast, updateProfileToast, deleteProfileToast };

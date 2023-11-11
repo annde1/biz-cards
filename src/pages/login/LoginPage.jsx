@@ -44,7 +44,7 @@ const LoginPage = () => {
         password: passwordValue,
       });
       storeToken(data, rememberMe);
-      console.log("data from login", data);
+      console.log("DATA FROM LOGIN", data);
       loginToast();
       autoLogin(true); //skip token test
       navigate(ROUTES.HOME);

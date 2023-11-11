@@ -205,8 +205,14 @@ const CreateCardPage = () => {
       <Grid container spacing={2}>
         <Grid item lg={8} md={8} sm={8} xs>
           <Button
-            variant="outlined"
-            sx={{ mt: 2, width: "100%", ml: "0%", bgcolor: "lightskyblue" }}
+            variant="contained"
+            sx={{
+              mt: 2,
+              width: "100%",
+              ml: "0%",
+              bgcolor: "#34488A",
+              color: "white",
+            }}
             onClick={handleUpdateChangesClick}
           >
             Update Changes
@@ -215,13 +221,13 @@ const CreateCardPage = () => {
         <Grid item xs>
           <Link to={ROUTES.HOME}>
             <Button
-              variant="outlined"
+              variant="contained"
               sx={{
                 mt: 2,
                 width: "100%",
                 ml: "0%",
-                bgcolor: "navy",
-                color: "gray",
+                bgcolor: "#34488A",
+                color: "WHITE",
               }}
             >
               Discard Changes

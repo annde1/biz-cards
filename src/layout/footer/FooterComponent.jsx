@@ -38,7 +38,7 @@ const FooterComponent = () => {
               setValue(newValue);
             }}
             style={{
-              backgroundColor: "#888582",
+              backgroundColor: "#34488A",
               height: "5rem",
             }}
           >
@@ -77,7 +77,7 @@ const FooterComponent = () => {
             onChange={(event, newValue) => {
               setValue(newValue);
             }}
-            style={{ backgroundColor: "#888582" }}
+            style={{ backgroundColor: "#34488A" }}
           >
             <Link to={ROUTES.ABOUT}>
               <BottomNavigationAction
@@ -97,7 +97,7 @@ const FooterComponent = () => {
             onChange={(event, newValue) => {
               setValue(newValue);
             }}
-            style={{ backgroundColor: "#888582" }}
+            style={{ backgroundColor: "#34488A" }}
           >
             <Link to={ROUTES.FAVORITE}>
               <BottomNavigationAction

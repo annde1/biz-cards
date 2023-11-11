@@ -34,9 +34,10 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
       sx={{
         width: 200,
         display: "flex",
+        flexShrink: 0,
         flexDirection: "column",
         justifyContent: "space-between",
-        bgcolor: "#f3f1f0",
+        bgcolor: "#34488A",
       }}
       role="presentation"
       onClick={onCloseDrawer}
@@ -44,18 +45,27 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
     >
       <Typography
         variant="body1"
-        style={{ textAlign: "center", marginTop: "1rem" }}
+        style={{ textAlign: "center", marginTop: "1rem", color: "white" }}
       >
         Profile
       </Typography>
       <Divider
-        sx={{ marginLeft: "1rem", marginRight: "1rem", marginTop: "1rem" }}
+        sx={{
+          marginLeft: "1rem",
+          marginRight: "1rem",
+          marginTop: "1rem",
+          color: "white",
+        }}
       />
       <List>
         {isLoggedIn &&
           profileLinks.map((link) => (
             <ListItem key={link.to} disablePadding>
-              <ListItemButton component={Link} to={link.to}>
+              <ListItemButton
+                component={Link}
+                to={link.to}
+                sx={{ color: "white" }}
+              >
                 <ListItemText primary={link.children} />
                 {getIcon(link.to)}
               </ListItemButton>
@@ -73,19 +83,28 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
       </List>
       <Typography
         variant="body1"
-        style={{ textAlign: "center", marginTop: "1rem" }}
+        style={{ textAlign: "center", marginTop: "1rem", color: "white" }}
       >
         Cards
       </Typography>
       <Divider
-        sx={{ marginLeft: "1rem", marginRight: "1rem", marginTop: "1rem" }}
+        sx={{
+          marginLeft: "1rem",
+          marginRight: "1rem",
+          marginTop: "1rem",
+          color: "white",
+        }}
       />
       <List>
         {isBusiness &&
           isLoggedIn &&
           cardsLinkBusiness.map((link) => (
             <ListItem key={link.to} disablePadding>
-              <ListItemButton component={Link} to={link.to}>
+              <ListItemButton
+                component={Link}
+                to={link.to}
+                sx={{ color: "white" }}
+              >
                 <ListItemText primary={link.children} />
                 {getIcon(link.to)}
               </ListItemButton>
@@ -97,7 +116,11 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
           isLoggedIn &&
           cardsLinkNotBusiness.map((link) => (
             <ListItem key={link.to} disablePadding>
-              <ListItemButton component={Link} to={link.to}>
+              <ListItemButton
+                component={Link}
+                to={link.to}
+                sx={{ color: "white" }}
+              >
                 <ListItemText primary={link.children} />
                 {getIcon(link.to)}
               </ListItemButton>
@@ -106,17 +129,26 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
       </List>
       <Typography
         variant="body1"
-        style={{ textAlign: "center", marginTop: "1rem" }}
+        style={{ textAlign: "center", marginTop: "1rem", color: "white" }}
       >
         Main
       </Typography>
       <Divider
-        sx={{ marginLeft: "1rem", marginRight: "1rem", marginTop: "1rem" }}
+        sx={{
+          marginLeft: "1rem",
+          marginRight: "1rem",
+          marginTop: "1rem",
+          color: "white",
+        }}
       />
       <List>
         {alwaysLinks.map((link) => (
           <ListItem key={link.to} disablePadding>
-            <ListItemButton component={Link} to={link.to}>
+            <ListItemButton
+              component={Link}
+              to={link.to}
+              sx={{ color: "white" }}
+            >
               <ListItemText primary={link.children} />
               {getIcon(link.to)}
             </ListItemButton>
@@ -126,7 +158,12 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
     </Box>
   );
   return (
-    <Drawer anchor="left" open={isOpen} onClose={onCloseDrawer}>
+    <Drawer
+      anchor="left"
+      open={isOpen}
+      onClose={onCloseDrawer}
+      style={{ height: "100%", minHeight: "100vh" }}
+    >
       {list()}
     </Drawer>
   );
