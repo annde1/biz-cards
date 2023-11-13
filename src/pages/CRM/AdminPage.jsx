@@ -13,15 +13,18 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteUserModal from "../../components/DeleteUserModal";
 const AdminPage = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [expanded, setExpanded] = useState(false);
-  const [showDeleteButton, setShowDeleteButton] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  const handleOpen = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
   useEffect(() => {
     const getAllUsers = async () => {
       try {
@@ -34,14 +37,15 @@ const AdminPage = () => {
     };
     getAllUsers();
   }, []);
-  const handleDeleteUser = async (_id) => {
-    try {
-      const { data } = await axios.delete("/users/" + _id);
-      console.log("User deleted", data);
-      setAllUsers((usersCopy) => usersCopy.filter((user) => user._id !== _id));
-    } catch (err) {
-      console.log("Delete user err from ADMIN", err);
-    }
+  const handleDeleteClick = () => {
+    // try {
+    //   const { data } = await axios.delete("/users/" + _id);
+    //   console.log("User deleted", data);
+    //   setAllUsers((usersCopy) => usersCopy.filter((user) => user._id !== _id));
+    // } catch (err) {
+    //   console.log("Delete user err from ADMIN", err);
+    // }
+    setShowModal(true);
   };
 
   const handleEditUserStatus = async (_id) => {};
@@ -54,6 +58,9 @@ const AdminPage = () => {
         alignItems: "center",
       }}
     >
+      {showModal && (
+        <DeleteUserModal open={showModal} handleClose={handleClose} />
+      )}
       <Box sx={{ marginTop: "3rem", marginBottom: "3rem" }}>
         <Typography variant="h4">User Managment System</Typography>
         <Typography variant="body1" sx={{ textAlign: "center" }}>
@@ -81,7 +88,7 @@ const AdminPage = () => {
                 {user.name.first} {user.name.last}
               </Typography>
               <Typography sx={{ color: "text.secondary" }}>
-                {user.isBusiness ? "Business User" : "Non Business User"}
+                {user.isBusiness ? "Business" : "Non Business"}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
@@ -89,7 +96,11 @@ const AdminPage = () => {
                 <IconButton>
                   <EditIcon />
                 </IconButton>
-                <IconButton onClick={() => handleDeleteUser(user._id)}>
+                <IconButton
+                  onClick={() => {
+                    handleDeleteClick();
+                  }}
+                >
                   <DeleteIcon></DeleteIcon>
                 </IconButton>
               </Box>

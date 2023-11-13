@@ -21,8 +21,14 @@ const editProfileSchema = Joi.object({
       "string.pattern.base": "Phone number must be a valid phone number",
     })
     .required(),
-  url: Joi.string().min(14).required(),
-  alt: Joi.string().min(2).max(256).required(),
+  url: Joi.string().min(14).required().messages({
+    "string.empty": "Url is required",
+    "string.min": "Url must be at least 14 characters long",
+  }),
+  alt: Joi.string().min(2).max(256).required().messages({
+    "string.empty": "Alt is required",
+    "string.min": "Alt must be at least 2 characters long",
+  }),
   state: Joi.string().min(2).max(256).allow(""),
   country: Joi.string().min(2).max(256).required().messages({
     "string.empty": "Address is required",

@@ -8,6 +8,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import AddIcon from "@mui/icons-material/Add";
 import HomeIcon from "@mui/icons-material/Home";
+import Person2Icon from "@mui/icons-material/Person2";
 const getIcon = (to) => {
   switch (to) {
     case ROUTES.LOGIN:
@@ -26,6 +27,8 @@ const getIcon = (to) => {
       return <AddIcon />;
     case ROUTES.HOME:
       return <HomeIcon />;
+    case ROUTES.MYPROFILE:
+      return <Person2Icon />;
 
     default:
       return null; // For routes with no specific icon

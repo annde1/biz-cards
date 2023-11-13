@@ -24,6 +24,8 @@ import { deleteProfileToast } from "../../service/toastifyService";
 import { authActions } from "../../store/authSlice";
 import { clearToken } from "../../service/storageService";
 import { clear } from "@testing-library/user-event/dist/clear";
+import Button from "@mui/material/Button";
+
 const MyProfilePage = () => {
   const [profileData, setProfileData] = useState({});
   const userData = useSelector((store) => store.authSlice.userData);
@@ -78,18 +80,7 @@ const MyProfilePage = () => {
           src={profileData.url ? profileData.url : ""}
           style={{ height: "6rem", width: "6rem", marginBottom: "1rem" }}
         />
-        <Box sx={{ marginBottom: "3rem" }}>
-          <IconButton
-            onClick={() => {
-              handleEditProfile();
-            }}
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton onClick={handleDeleteProfile}>
-            <DeleteIcon></DeleteIcon>
-          </IconButton>
-        </Box>
+
         <TableContainer
           component={Paper}
           sx={{ marginBottom: "3rem", width: "80%" }}
@@ -120,6 +111,25 @@ const MyProfilePage = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Box sx={{ display: "flex" }}>
+          <Button
+            variant="contained"
+            sx={{ marginRight: "1rem" }}
+            onClick={() => {
+              handleEditProfile();
+            }}
+          >
+            Edit Profile
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              handleDeleteProfile();
+            }}
+          >
+            Delete Profile
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

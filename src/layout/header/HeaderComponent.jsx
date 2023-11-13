@@ -163,7 +163,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
 
   return (
     <Box sx={{ flexGrow: 1, mb: 2 }}>
-      <AppBar position="static" sx={{ backgroundColor: "#34488A" }}>
+      <AppBar position="static">
         <Toolbar>
           <IconButton
             size="large"

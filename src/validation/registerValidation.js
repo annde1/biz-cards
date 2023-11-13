@@ -31,7 +31,7 @@ const registerSchema = Joi.object({
     .required()
     .messages({
       "string.empty": "Email is required",
-      "string.pattern.base": "Phone number must be a valid phone number",
+      "string.pattern.base": "Email must be valid email",
       "string.min": "Email must be at least 5 characters long",
     }),
   password: Joi.string()

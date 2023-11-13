@@ -9,13 +9,14 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { toast } from "react-toastify";
 import axios from "axios";
 import { normalizeData } from "./normalizeData";
 import { validateRegister } from "../../validation/registerValidation";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import { Alert } from "@mui/material";
+import { registerToast } from "../../service/toastifyService";
+import { successfullRegistration } from "../../service/toastifyService";
 
 const RegisterPage = () => {
   const [inputsValue, setInputsValue] = useState({
@@ -38,18 +39,6 @@ const RegisterPage = () => {
 
   const [error, setError] = useState({});
   const navigate = useNavigate();
-  const successfulRegistration = () => {
-    toast.success("Your registration was successful! 😃", {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
   const handleInputsChange = (e) => {
     //step 4
     setInputsValue((currentState) => ({
@@ -67,19 +56,19 @@ const RegisterPage = () => {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      // inputsValue.isBusiness = false;
       const errors = validateRegister(inputsValue);
-      console.log(errors);
       setError(errors);
-      console.log(errors);
       if (errors) return;
       let request = normalizeData(inputsValue);
       const { data } = await axios.post("/users", request);
       console.log("data", data);
-      successfulRegistration();
+      console.log(data.response.data);
+      successfullRegistration();
       navigate(ROUTES.LOGIN);
     } catch (err) {
       console.log(err);
+      console.log(err.response.data);
+      registerToast(err.response.data);
     }
   };
 
@@ -92,7 +81,7 @@ const RegisterPage = () => {
         alignItems: "center",
       }}
     >
-      <Avatar sx={{ m: 1, bgcolor: "#716f6d" }}>
+      <Avatar sx={{ m: 1, backgroundColor: "#483078" }}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
@@ -100,7 +89,7 @@ const RegisterPage = () => {
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={4}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               autoComplete="given-name"
               name="first"
@@ -117,7 +106,7 @@ const RegisterPage = () => {
             )}
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               autoComplete="given-name"
               name="middle"
@@ -129,7 +118,7 @@ const RegisterPage = () => {
               onChange={handleInputsChange}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -144,7 +133,7 @@ const RegisterPage = () => {
               <Alert severity="warning">{error.last}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -159,7 +148,7 @@ const RegisterPage = () => {
               <Alert severity="warning">{error.email}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -175,7 +164,7 @@ const RegisterPage = () => {
               <Alert severity="warning">{error.password}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -190,7 +179,7 @@ const RegisterPage = () => {
               <Alert severity="warning">{error.phone}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               fullWidth
               name="url"
@@ -201,7 +190,7 @@ const RegisterPage = () => {
               onChange={handleInputsChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               fullWidth
               name="alt"
@@ -212,7 +201,7 @@ const RegisterPage = () => {
               onChange={handleInputsChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               fullWidth
               name="state"
@@ -223,7 +212,7 @@ const RegisterPage = () => {
               onChange={handleInputsChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -238,7 +227,7 @@ const RegisterPage = () => {
               <Alert severity="warning">{error.country}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -253,7 +242,7 @@ const RegisterPage = () => {
               <Alert severity="warning">{error.city}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -268,7 +257,7 @@ const RegisterPage = () => {
               <Alert severity="warning">{error.street}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -283,7 +272,7 @@ const RegisterPage = () => {
               <Alert severity="warning">{error.houseNumber}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               fullWidth
               name="zip"
@@ -294,7 +283,7 @@ const RegisterPage = () => {
               onChange={handleInputsChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -311,7 +300,7 @@ const RegisterPage = () => {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2, bgcolor: "#716f6d" }}
+          sx={{ mt: 3, mb: 2, bgcolor: "#483078", color: "white" }}
         >
           Sign Up
         </Button>

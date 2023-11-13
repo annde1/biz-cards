@@ -9,16 +9,12 @@ import {
 import InfoIcon from "@mui/icons-material/Info";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import myLinks from "../myLinks";
-import NavLinkComponent from "../header/NavLinkComponent";
+
 import { Link } from "react-router-dom";
 import nextKey from "generate-my-key";
 import ROUTES from "../../routes/ROUTES";
 import { useSelector } from "react-redux";
-import { authActions } from "../../store/authSlice";
-import Box from "@mui/material";
-
+import styles from "./styles.module.css";
 const FooterComponent = () => {
   const [value, setValue] = useState(0);
   const isLoggedIn = useSelector((store) => store.authSlice.loggedIn);
@@ -38,8 +34,9 @@ const FooterComponent = () => {
               setValue(newValue);
             }}
             style={{
-              backgroundColor: "#34488A",
-              height: "5rem",
+              backgroundColor: "#483078",
+              paddingTop: "3rem",
+              paddingBottom: "3rem",
             }}
           >
             <BottomNavigationAction
@@ -77,14 +74,18 @@ const FooterComponent = () => {
             onChange={(event, newValue) => {
               setValue(newValue);
             }}
-            style={{ backgroundColor: "#34488A" }}
+            style={{
+              paddingTop: "3rem",
+              paddingBottom: "3rem",
+            }}
+
+            // className={styles.bottomNav}
           >
-            <Link to={ROUTES.ABOUT}>
-              <BottomNavigationAction
-                label="About"
-                icon={<InfoIcon style={{ color: "#f9f8f7" }} />}
-              />
-            </Link>
+            <BottomNavigationAction
+              label="About"
+              to={ROUTES.ABOUT}
+              icon={<InfoIcon />}
+            />
           </BottomNavigation>
         </>
       )}
@@ -97,7 +98,11 @@ const FooterComponent = () => {
             onChange={(event, newValue) => {
               setValue(newValue);
             }}
-            style={{ backgroundColor: "#34488A" }}
+            style={{
+              backgroundColor: "#483078",
+              paddingTop: "3rem",
+              paddingBottom: "3rem",
+            }}
           >
             <Link to={ROUTES.FAVORITE}>
               <BottomNavigationAction

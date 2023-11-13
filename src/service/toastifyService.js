@@ -49,4 +49,36 @@ const deleteProfileToast = () => {
     theme: "light",
   });
 };
-export { cardCratedToast, loginToast, updateProfileToast, deleteProfileToast };
+
+const registerToast = (str) => {
+  toast.warn(str, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+};
+const successfullRegistration = () => {
+  toast.success("Your registration was successful! ", {
+    position: "top-center",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+};
+export {
+  cardCratedToast,
+  loginToast,
+  updateProfileToast,
+  deleteProfileToast,
+  registerToast,
+  successfullRegistration,
+};

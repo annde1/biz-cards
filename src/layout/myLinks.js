@@ -43,7 +43,10 @@ const loggedOutProfileLinks = [
   { to: ROUTES.LOGIN, children: "Log in" },
   { to: ROUTES.REGISTER, children: "Register" },
 ];
-const profileLinks = [{ to: ROUTES.EDITPROFILE, children: "Edit Profile" }];
+const profileLinks = [
+  { to: ROUTES.EDITPROFILE, children: "Edit Profile" },
+  { to: ROUTES.MYPROFILE, children: "Your Profile" },
+];
 //TODO: Bring back the always link, cause there is bug
 //TODO: Left drawer component (make it as navigation center) - make links. Make two sections for profile related stuff and card related stuff. Ask Yonatan if ok, if NavBar link of be there (instead the Hamburger manu)
 export default myLinks;

@@ -14,26 +14,29 @@ const LayoutComponent = ({ children }) => {
   const dispatch = useDispatch();
 
   const themes = tmc({
-    "text.headerColor": "#171616",
+    "text.headerColor": "#f9f8f7",
     "text.headerActive": "#f9f8f7",
-    favActive: "*#be1700",
   });
-  // console.log("themes", themes);
-  // const themes = tmc({ primary: "#00FF00", elisheva: "#FF0000" });
 
-  const darkTheme = createTheme(themes.dark);
-  const lightTheme = createTheme(themes.light);
-
-  // const darkTheme = createTheme({
-  //   palette: {
-  //     mode: "dark",
-  //   },
-  // });
-  // const lightTheme = createTheme({
-  //   palette: {
-  //     mode: "light",
-  //   },
-  // });
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+  const lightTheme = createTheme({
+    palette: {
+      mode: "light",
+      primary: {
+        main: "#483078",
+      },
+      secondary: {
+        main: "#f9f8f7",
+      },
+      background: {
+        footer: "#483078",
+      },
+    },
+  });
 
   const handleThemeChange = (checked) => {
     dispatch(darkThemeActions.changeTheme());

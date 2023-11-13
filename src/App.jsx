@@ -16,12 +16,10 @@ const App = () => {
       } catch (err) {
         console.log(err);
       } finally {
-        //this block of code will executed when the promise done
-        //no matter if its done or got error
         setDoneAuth(true);
       }
     })();
-  }, []);
+  }, [autoLogin]);
   return (
     <LayoutComponent>
       <ToastContainer />

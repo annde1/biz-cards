@@ -2,14 +2,9 @@ import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { toast } from "react-toastify";
 import axios from "axios";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { validateEditProfile } from "../../validation/editProfileValidation";
@@ -25,8 +20,6 @@ const EditProfilePage = () => {
     first: "",
     middle: "",
     last: "",
-    // email: "",
-    // password: "",
     phone: "",
     url: "",
     alt: "",
@@ -42,35 +35,34 @@ const EditProfilePage = () => {
   const [error, setError] = useState({});
   const navigate = useNavigate();
   const userData = useSelector((store) => store.authSlice.userData);
-  // console.log(userId);
   const handleInputsChange = (e) => {
     setInputsValue((currentState) => ({
       ...currentState,
       [e.target.id]: e.target.value,
     }));
   };
-  const handleCheckboxChange = (e) => {
-    setInputsValue((curr) => ({
-      ...curr,
-      isBusiness: e.target.checked,
-    }));
-  };
+  // const handleCheckboxChange = (e) => {
+  //   setInputsValue((curr) => ({
+  //     ...curr,
+  //     isBusiness: e.target.checked,
+  //   }));
+  // };
 
   const handleUpdateProfile = async (e) => {
     try {
       e.preventDefault();
       const errors = validateEditProfile(inputsValue);
-      console.log(errors);
+      // console.log(errors);
       setError(errors);
-      console.log(userData._id);
+      // console.log(userData._id);
       let request = normalizeProfileData(inputsValue);
-      console.log(request);
+      // console.log(request);
       if (errors) return;
       if (userData) {
         const { data } = await axios.put("/users/" + userData._id, request);
         console.log("data", data);
         updateProfileToast();
-        navigate(ROUTES.LOGIN);
+        navigate(ROUTES.HOME);
       }
     } catch (err) {
       console.log("Error from edit profile", err);
@@ -85,15 +77,15 @@ const EditProfilePage = () => {
         alignItems: "center",
       }}
     >
-      <Avatar sx={{ m: 1, bgcolor: "#716f6d" }}>
+      <Avatar sx={{ m: 1, bgcolor: "#483078" }}>
         <EditNoteIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
         Edit Profile
       </Typography>
-      <Box component="form" noValidate onSubmit sx={{ mt: 3 }}>
+      <Box component="form" noValidate sx={{ mt: 3 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={4}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               autoComplete="given-name"
               name="first"
@@ -110,7 +102,7 @@ const EditProfilePage = () => {
             )}
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               autoComplete="given-name"
               name="middle"
@@ -122,7 +114,7 @@ const EditProfilePage = () => {
               onChange={handleInputsChange}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -137,38 +129,7 @@ const EditProfilePage = () => {
               <Alert severity="warning">{error.last}</Alert>
             )}
           </Grid>
-          {/* <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              value={inputsValue.email}
-              onChange={handleInputsChange}
-            />
-            {error && error.email && (
-              <Alert severity="warning">{error.email}</Alert>
-            )}
-          </Grid> */}
-          {/* <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="new-password"
-              value={inputsValue.password}
-              onChange={handleInputsChange}
-            />
-            {error && error.password && (
-              <Alert severity="warning">{error.password}</Alert>
-            )}
-          </Grid> */}
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -183,7 +144,7 @@ const EditProfilePage = () => {
               <Alert severity="warning">{error.phone}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               fullWidth
               name="url"
@@ -193,8 +154,11 @@ const EditProfilePage = () => {
               value={inputsValue.url}
               onChange={handleInputsChange}
             />
+            {error && error.url && (
+              <Alert severity="warning">{error.url}</Alert>
+            )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               fullWidth
               name="alt"
@@ -204,8 +168,11 @@ const EditProfilePage = () => {
               value={inputsValue.alt}
               onChange={handleInputsChange}
             />
+            {error && error.alt && (
+              <Alert severity="warning">{error.alt}</Alert>
+            )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               fullWidth
               name="state"
@@ -216,7 +183,7 @@ const EditProfilePage = () => {
               onChange={handleInputsChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -231,7 +198,7 @@ const EditProfilePage = () => {
               <Alert severity="warning">{error.country}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -246,7 +213,7 @@ const EditProfilePage = () => {
               <Alert severity="warning">{error.city}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -261,7 +228,7 @@ const EditProfilePage = () => {
               <Alert severity="warning">{error.street}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               required
               fullWidth
@@ -276,7 +243,7 @@ const EditProfilePage = () => {
               <Alert severity="warning">{error.houseNumber}</Alert>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextField
               fullWidth
               name="zip"
@@ -287,7 +254,7 @@ const EditProfilePage = () => {
               onChange={handleInputsChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item lg={6} md={6} sm={12} xs={12}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -298,13 +265,13 @@ const EditProfilePage = () => {
               }
               label="Business Account"
             />
-          </Grid>
+          </Grid> */}
         </Grid>
         <Button
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2, bgcolor: "#716f6d" }}
+          sx={{ mt: 3, mb: 2, bgcolor: "#483078" }}
           onClick={handleUpdateProfile}
         >
           Edit Profile

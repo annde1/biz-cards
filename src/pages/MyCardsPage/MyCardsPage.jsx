@@ -32,9 +32,9 @@ const MyCardsPage = () => {
 
   return (
     <>
-      <Box sx={{ textAlign: "center" }}>
-        <Typography variant="h2">My Cards</Typography>
-        <Typography variant="body2">
+      <Box sx={{ textAlign: "center", marginTop: "3rem" }}>
+        <Typography variant="h4">My Cards</Typography>
+        <Typography variant="body2" sx={{ marginBottom: "3rem" }}>
           Here you can see all of your cards
         </Typography>
         {isLoading && (

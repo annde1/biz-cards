@@ -5,11 +5,10 @@ import {
   ListItemButton,
   ListItemText,
   Divider,
-  Button,
   Drawer,
   Typography,
 } from "@mui/material";
-import LogoutIcon from "@mui/icons-material/Logout";
+
 import {
   profileLinks,
   loggedOutProfileLinks,
@@ -18,7 +17,6 @@ import {
   alwaysLinks,
 } from "../../myLinks";
 import { useSelector } from "react-redux";
-import nextKey from "generate-my-key";
 import getIcon from "../../../service/iconsService";
 import Link from "@mui/material/Link";
 
@@ -36,8 +34,8 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
         display: "flex",
         flexShrink: 0,
         flexDirection: "column",
-        justifyContent: "space-between",
-        bgcolor: "#34488A",
+        height: "100%",
+        bgcolor: "#483078",
       }}
       role="presentation"
       onClick={onCloseDrawer}
@@ -74,32 +72,6 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
         {!isLoggedIn &&
           loggedOutProfileLinks.map((link) => (
             <ListItem key={link.to} disablePadding>
-              <ListItemButton component={Link} to={link.to}>
-                <ListItemText primary={link.children} />
-                {getIcon(link.to)}
-              </ListItemButton>
-            </ListItem>
-          ))}
-      </List>
-      <Typography
-        variant="body1"
-        style={{ textAlign: "center", marginTop: "1rem", color: "white" }}
-      >
-        Cards
-      </Typography>
-      <Divider
-        sx={{
-          marginLeft: "1rem",
-          marginRight: "1rem",
-          marginTop: "1rem",
-          color: "white",
-        }}
-      />
-      <List>
-        {isBusiness &&
-          isLoggedIn &&
-          cardsLinkBusiness.map((link) => (
-            <ListItem key={link.to} disablePadding>
               <ListItemButton
                 component={Link}
                 to={link.to}
@@ -111,6 +83,39 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
             </ListItem>
           ))}
       </List>
+      {isBusiness && isLoggedIn && (
+        <>
+          <Typography
+            variant="body1"
+            style={{ textAlign: "center", marginTop: "1rem", color: "white" }}
+          >
+            Cards
+          </Typography>
+          <Divider
+            sx={{
+              marginLeft: "1rem",
+              marginRight: "1rem",
+              marginTop: "1rem",
+              color: "white",
+            }}
+          />
+          <List>
+            {cardsLinkBusiness.map((link) => (
+              <ListItem key={link.to} disablePadding>
+                <ListItemButton
+                  component={Link}
+                  to={link.to}
+                  sx={{ color: "white" }}
+                >
+                  <ListItemText primary={link.children} />
+                  {getIcon(link.to)}
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </>
+      )}
+
       <List>
         {!isBusiness &&
           isLoggedIn &&
@@ -158,12 +163,7 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
     </Box>
   );
   return (
-    <Drawer
-      anchor="left"
-      open={isOpen}
-      onClose={onCloseDrawer}
-      style={{ height: "100%", minHeight: "100vh" }}
-    >
+    <Drawer anchor="left" open={isOpen} onClose={onCloseDrawer}>
       {list()}
     </Drawer>
   );

@@ -88,7 +88,7 @@ const CardComponent = ({
     };
     try {
       await onLikeCard(_id, cardDetails);
-      setIsLiked(!isLiked);
+      setIsLiked((prevIsLiked) => !prevIsLiked);
       console.log(isLiked);
     } catch (err) {
       console.log(err);
@@ -145,7 +145,7 @@ const CardComponent = ({
           {isLoggedIn && (
             <Box>
               <IconButton onClick={handleLikeCardClick}>
-                <FavoriteIcon color={isLiked ? "favActive" : ""} />
+                <FavoriteIcon sx={{ color: isLiked ? "#A70001" : "" }} />
               </IconButton>
             </Box>
           )}
@@ -177,10 +177,6 @@ CardComponent.propTypes = {
   cardNumber: PropTypes.number,
   onDeleteCard: PropTypes.func.isRequired,
   onEditCard: PropTypes.func.isRequired,
-};
-CardComponent.defaultProps = {
-  img: "https://www.livemint.com/lm-img/img/2023/08/14/1600x900/garena_free_fire_max_1688877791610_1691982307589.jpg",
-  alt: "running",
 };
 
 export default CardComponent;
