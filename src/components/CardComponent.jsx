@@ -16,7 +16,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalComponent from "./ModalComponent";
 import { current } from "@reduxjs/toolkit";
 
@@ -89,11 +89,13 @@ const CardComponent = ({
     try {
       await onLikeCard(_id, cardDetails);
       setIsLiked((prevIsLiked) => !prevIsLiked);
-      console.log(isLiked);
     } catch (err) {
       console.log(err);
     }
   };
+  // useEffect(() => {
+  //   console.log(isLiked);
+  // }, [isLiked]);
   return (
     <Card>
       <CardActionArea>

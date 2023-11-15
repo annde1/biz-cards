@@ -13,7 +13,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Switch } from "@mui/material";
-import Links from "./ui/Links";
+import ProfileIconComponent from "./ui/ProfileIconComponent";
 import LeftDrawerComponent from "./ui/LeftDrawerComponent";
 import { useState } from "react";
 import FilterComponent from "./ui/FilterComponent";
@@ -181,9 +181,9 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            LOGO
+            BIZ CARDS
           </Typography>
-          <Links />
+          {/* <Links /> */}
           <FilterComponent />
           <Box
             sx={{
@@ -197,19 +197,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
             <Switch checked={isDarkTheme} onChange={handleThemeChange} />
           </Box>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
+          <ProfileIconComponent handleProfileMenuOpen={handleProfileMenuOpen} />
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"

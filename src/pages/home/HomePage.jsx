@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Container, Grid } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Container, Grid, Typography } from "@mui/material";
 import CardComponent from "../../components/CardComponent";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
@@ -7,35 +7,29 @@ import axios from "axios";
 import homePageNormalization from "./homePageNormalization";
 import { useSelector } from "react-redux";
 import useQueryParams from "../../hooks/useQueryParams";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 let initialDataFromServer = [];
-// let likedCards = [];
-
 const HomePage = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
-  // console.log(userData);
   const query = useQueryParams();
   useEffect(() => {
     axios
       .get("/cards")
       .then(({ data }) => {
-        // console.log("The data is: ", data);
         if (userData) {
-          // If user is logged in mutate the data (likes --> boolean)
-          // likedCards = data
-          //   .filter((card) => card.likes.includes(userData._id))
-          //   .map((card) => card._id);
           data = homePageNormalization(data, userData._id);
-          // setLikedCards(likedCardz);
         }
         return data;
       })
       .then((data) => {
-        // console.log(data);
         initialDataFromServer = data;
         setDataFromServer(data);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log("err", err);
@@ -44,7 +38,6 @@ const HomePage = () => {
   useEffect(() => {
     if (!initialDataFromServer.length) return;
     const filter = query.filter ? query.filter : "";
-    // console.log("filter", filter);
     setDataFromServer(
       initialDataFromServer.filter((card) => card.title.startsWith(filter))
     );
@@ -52,7 +45,6 @@ const HomePage = () => {
   const handleDeleteCard = async (_id) => {
     try {
       const { data } = await axios.delete("/cards/" + _id);
-      console.log("Card Deleted", data);
       setDataFromServer((dataFromServerCopy) =>
         dataFromServerCopy.filter((card) => card._id !== _id)
       );
@@ -60,8 +52,8 @@ const HomePage = () => {
       console.log("Error From Delete Card", err);
     }
   };
+
   const handleEditCard = (_id) => {
-    // console.log("id to edit", _id);
     navigate(`${ROUTES.EDITCARD}/${_id}`);
   };
   const handleLikeCard = async (_id, cardDetails) => {
@@ -75,6 +67,26 @@ const HomePage = () => {
 
   return (
     <Container>
+      <Typography variant="h3" sx={{ textAlign: "center", marginTop: "2rem" }}>
+        Home
+      </Typography>
+      <Typography
+        variant="body1"
+        sx={{ marginBottom: "2rem", textAlign: "center" }}
+      >
+        Here you can see the cards of all businesses
+      </Typography>
+      {isLoading && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "2rem",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
       <Grid container spacing={2}>
         {dataFromServer.map((card) => (
           <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>

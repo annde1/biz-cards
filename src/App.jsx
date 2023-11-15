@@ -23,7 +23,7 @@ const App = () => {
   return (
     <LayoutComponent>
       <ToastContainer />
-      {doneAuth ? <Router /> : <LinearProgress />}
+      {doneAuth && <Router />}
     </LayoutComponent>
   );
 };

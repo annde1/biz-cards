@@ -1,5 +1,5 @@
 // import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -26,8 +26,12 @@ const LoginPage = () => {
   const [passwordValue, setPasswordValue] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
   const [errorsState, setErrorsState] = useState(null);
+  const [authError, setAuthError] = useState("");
   const navigate = useNavigate();
   const autoLogin = useAutoLogin();
+  useEffect(() => {
+    console.log(errorsState);
+  }, [errorsState]);
 
   const handleSubmit = async (event) => {
     try {
@@ -49,8 +53,8 @@ const LoginPage = () => {
       autoLogin(true); //skip token test
       navigate(ROUTES.HOME);
     } catch (err) {
-      console.log("err from login", err.response.status);
-      if (err.response.status === 400) setErrorsState(err.response.data);
+      console.log("err from login", err.response);
+      if (err.response.status === 400) setAuthError(err.response.data);
     }
   };
   const handleEmailInputChange = (e) => {
@@ -92,7 +96,7 @@ const LoginPage = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "#716f6d" }}>
+          <Avatar sx={{ m: 1, bgcolor: "#483078" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -134,6 +138,7 @@ const LoginPage = () => {
             {errorsState && errorsState.password && (
               <Alert severity="warning">{errorsState.password}</Alert>
             )}
+            {authError && <Alert severity="warning">{authError}</Alert>}
             <FormControlLabel
               control={
                 <Checkbox
@@ -149,13 +154,17 @@ const LoginPage = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, bgcolor: "#716f6d" }}
+              sx={{ mt: 3, mb: 2 }}
             >
               Sign In
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2" style={{ color: "#000000" }}>
+                <Link
+                  href={ROUTES.REGISTER}
+                  variant="body2"
+                  style={{ color: "#000000" }}
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

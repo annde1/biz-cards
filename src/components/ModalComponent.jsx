@@ -126,7 +126,9 @@ const ModalComponent = ({
               marginTop: "2rem",
             }}
           >
-            <Button variant="outlined">Close</Button>
+            <Button variant="outlined" onClick={handleClose}>
+              Close
+            </Button>
           </Box>
         </Box>
       </Modal>

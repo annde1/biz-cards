@@ -4,15 +4,16 @@ import {
   TextField,
   Grid,
   Typography,
-  Divider,
   Button,
-  Paper,
+  Alert,
 } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import axios from "axios";
+import { validateCard } from "../../validation/cardValidation";
 
 const EditCardPage = () => {
+  //TODO: Cleaning up this component: normalize data, extract components
   const [inputsValue, setInputValue] = useState({
     title: "",
     subtitle: "",
@@ -31,13 +32,13 @@ const EditCardPage = () => {
     zip: "",
   });
   const [fetchedCardData, setFetchedCardData] = useState(null);
+  const [error, setError] = useState({});
   const { id: _id } = useParams();
-  console.log(_id);
+
   useEffect(() => {
     const getCardById = async () => {
       try {
         const { data } = await axios.get("/cards/" + _id);
-        console.log(data);
         setFetchedCardData(data);
       } catch (err) {
         console.log(err);
@@ -51,9 +52,13 @@ const EditCardPage = () => {
       [e.target.id]: e.target.value,
     }));
   };
-  const handleUpdateChangesClick = async () => {
+  const handleUpdateChangesClick = async (e) => {
     //TODO: normalization for data
     try {
+      e.preventDefault();
+      const errors = validateCard(inputsValue);
+      setError(errors);
+      if (errors) return;
       const { data } = await axios.put("/cards/" + _id, {
         title: inputsValue.title,
         subtitle: inputsValue.subtitle,
@@ -113,11 +118,14 @@ const EditCardPage = () => {
             placeholder={getPlaceholderValue("title")}
             required
           />
+          {error && error.title && (
+            <Alert severity="warning">{error.title}</Alert>
+          )}
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <TextField
             id="subtitle"
-            label="SubTitle"
+            label="Subtitle"
             variant="outlined"
             def
             sx={{ mt: "10px", width: "100%" }}
@@ -126,6 +134,9 @@ const EditCardPage = () => {
             placeholder={getPlaceholderValue("subtitle")}
             required
           />
+          {error && error.subtitle && (
+            <Alert severity="warning">{error.subtitle}</Alert>
+          )}
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <TextField
@@ -138,6 +149,9 @@ const EditCardPage = () => {
             placeholder={getPlaceholderValue("phone")}
             required
           />
+          {error && error.phone && (
+            <Alert severity="warning">{error.phone}</Alert>
+          )}
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <TextField
@@ -150,6 +164,9 @@ const EditCardPage = () => {
             placeholder={getPlaceholderValue("description")}
             required
           />
+          {error && error.description && (
+            <Alert severity="warning">{error.description}</Alert>
+          )}
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <TextField
@@ -173,6 +190,9 @@ const EditCardPage = () => {
             placeholder={getPlaceholderValue("email")}
             required
           />
+          {error && error.email && (
+            <Alert severity="warning">{error.email}</Alert>
+          )}
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <TextField
@@ -218,6 +238,9 @@ const EditCardPage = () => {
             placeholder={getPlaceholderValue("country")}
             required
           />
+          {error && error.country && (
+            <Alert severity="warning">{error.country}</Alert>
+          )}
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <TextField
@@ -230,6 +253,9 @@ const EditCardPage = () => {
             placeholder={getPlaceholderValue("city")}
             required
           />
+          {error && error.city && (
+            <Alert severity="warning">{error.city}</Alert>
+          )}
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <TextField
@@ -242,6 +268,9 @@ const EditCardPage = () => {
             placeholder={getPlaceholderValue("street")}
             required
           />
+          {error && error.street && (
+            <Alert severity="warning">{error.street}</Alert>
+          )}
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <TextField
@@ -254,6 +283,9 @@ const EditCardPage = () => {
             placeholder={getPlaceholderValue("houseNumber")}
             required
           />
+          {error && error.houseNumber && (
+            <Alert severity="warning">{error.houseNumber}</Alert>
+          )}
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <TextField
@@ -275,7 +307,7 @@ const EditCardPage = () => {
               mt: 2,
               width: "100%",
               ml: "0%",
-              bgcolor: "#716f6d",
+              bgcolor: "#483078",
               color: "white",
             }}
             onClick={handleUpdateChangesClick}
@@ -291,7 +323,7 @@ const EditCardPage = () => {
                 mt: 2,
                 width: "100%",
                 ml: "0%",
-                bgcolor: "#716f6d",
+                bgcolor: "#483078",
                 color: "white",
               }}
             >

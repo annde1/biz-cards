@@ -5,6 +5,7 @@ import StyledInputBase from "./StyledInputBase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../routes/ROUTES";
+import Box from "@mui/material/Box";
 const FilterComponent = () => {
   const [txt, setTxt] = useState("");
   const navigate = useNavigate();
@@ -15,17 +16,19 @@ const FilterComponent = () => {
   };
 
   return (
-    <Search>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase
-        placeholder="Search…"
-        inputProps={{ "aria-label": "search" }}
-        value={txt}
-        onChange={handleInputChange}
-      />
-    </Search>
+    <Box sx={{ width: "30rem" }}>
+      <Search>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Search…"
+          inputProps={{ "aria-label": "search" }}
+          value={txt}
+          onChange={handleInputChange}
+        />
+      </Search>
+    </Box>
   );
 };
 

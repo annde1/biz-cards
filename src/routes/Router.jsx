@@ -7,7 +7,6 @@ import Error404Page from "../pages/404/Error404Page";
 import LoginPage from "../pages/login/LoginPage";
 import EditCardPage from "../pages/EditCardPage/EditCardPage";
 import Css1Component from "../playground/l1/Css1Component";
-import SandboxPage from "../pages/Sandbox/SandboxPage";
 import Effect1 from "../playground/l7/Effect1";
 import Effect2 from "../playground/l7/Effect2";
 import Effect3Page from "../playground/l7/Effect3Page";
@@ -58,14 +57,6 @@ const Router = () => {
         }
       />
       <Route path={`${ROUTES.EDITCARD}/:id`} element={<EditCardPage />} />
-      <Route path={ROUTES.SANDBOX} element={<SandboxPage />}>
-        <Route path="l1css" element={<Css1Component />} />
-        <Route path="effect1" element={<Effect1 />} />
-        <Route path="effect2" element={<Effect2 />} />
-        <Route path="effect3" element={<Effect3Page />} />
-        <Route path="state" element={<StateCompo />} />
-        <Route path="hooks" element={<CounterPage />} />
-      </Route>
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.FAVORITE} element={<FavoritesPage />} />
       <Route path={ROUTES.MYCARDS} element={<MyCardsPage />} />

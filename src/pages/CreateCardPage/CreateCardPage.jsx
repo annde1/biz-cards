@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   TextField,
@@ -13,14 +13,15 @@ import ROUTES from "../../routes/ROUTES";
 import axios from "axios";
 import { cardCratedToast } from "../../service/toastifyService";
 import Box from "@mui/material/Box";
+import Alert from "@mui/material/Alert";
+import { validateCard } from "../../validation/cardValidation";
 
 const CreateCardPage = () => {
   const [inputsValue, setInputValue] = useState({
     title: "",
     subtitle: "",
     phone: "",
-    add: "",
-    mail: "",
+    email: "",
     description: "",
     web: "",
     url: "",
@@ -32,7 +33,10 @@ const CreateCardPage = () => {
     houseNumber: "",
     zip: "",
   });
-
+  const [error, setError] = useState({});
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     setInputValue((currentState) => ({
@@ -40,14 +44,20 @@ const CreateCardPage = () => {
       [e.target.id]: e.target.value,
     }));
   };
-  const handleUpdateChangesClick = async () => {
+  const handleUpdateChangesClick = async (e) => {
     try {
+      e.preventDefault();
+      const errors = validateCard(inputsValue);
+      console.log(errors);
+      setError(errors);
+      console.log(errors);
+      if (errors) return;
       const { data } = await axios.post("/cards", {
         title: inputsValue.title,
         subtitle: inputsValue.subtitle,
         description: inputsValue.description,
         phone: inputsValue.phone,
-        email: inputsValue.mail,
+        email: inputsValue.email,
         web: inputsValue.web,
         image: {
           url: inputsValue.url,
@@ -96,6 +106,9 @@ const CreateCardPage = () => {
             value={inputsValue.title}
             required
           />
+          {error && error.title && (
+            <Alert severity="warning">{error.title}</Alert>
+          )}
           <TextField
             id="subtitle"
             label="Subtitle"
@@ -105,6 +118,9 @@ const CreateCardPage = () => {
             value={inputsValue.subtitle}
             required
           />
+          {error && error.subtitle && (
+            <Alert severity="warning">{error.subtitle}</Alert>
+          )}
           <TextField
             id="phone"
             label="Phone Number"
@@ -114,6 +130,9 @@ const CreateCardPage = () => {
             value={inputsValue.phone}
             required
           />
+          {error && error.phone && (
+            <Alert severity="warning">{error.phone}</Alert>
+          )}
           <TextField
             id="description"
             label="Description"
@@ -123,6 +142,9 @@ const CreateCardPage = () => {
             value={inputsValue.description}
             required
           />
+          {error && error.description && (
+            <Alert severity="warning">{error.description}</Alert>
+          )}
           <TextField
             id="web"
             label="Web"
@@ -137,9 +159,12 @@ const CreateCardPage = () => {
             variant="outlined"
             sx={{ mt: "10px", width: "100%" }}
             onChange={handleInputChange}
-            value={inputsValue.mail}
+            value={inputsValue.email}
             required
           />
+          {error && error.email && (
+            <Alert severity="warning">{error.email}</Alert>
+          )}
           <TextField
             id="url"
             label="Url"
@@ -177,6 +202,9 @@ const CreateCardPage = () => {
             value={inputsValue.country}
             required
           />
+          {error && error.country && (
+            <Alert severity="warning">{error.country}</Alert>
+          )}
           <TextField
             id="city"
             label="City"
@@ -186,6 +214,9 @@ const CreateCardPage = () => {
             value={inputsValue.city}
             required
           />
+          {error && error.city && (
+            <Alert severity="warning">{error.city}</Alert>
+          )}
           <TextField
             id="street"
             label="Street"
@@ -195,6 +226,9 @@ const CreateCardPage = () => {
             value={inputsValue.street}
             required
           />
+          {error && error.street && (
+            <Alert severity="warning">{error.street}</Alert>
+          )}
           <TextField
             id="houseNumber"
             label="House Number"
@@ -204,6 +238,9 @@ const CreateCardPage = () => {
             value={inputsValue.houseNumber}
             required
           />
+          {error && error.houseNumber && (
+            <Alert severity="warning">{error.houseNumber}</Alert>
+          )}
           <TextField
             id="zip"
             label="Zip"

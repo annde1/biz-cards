@@ -6,13 +6,15 @@ import Grid from "@mui/material/Grid";
 import CardComponent from "../../components/CardComponent";
 import { useSelector } from "react-redux";
 import homePageNormalization from "../home/homePageNormalization";
-import { current } from "@reduxjs/toolkit";
-import LinearProgress from "@mui/material/LinearProgress";
 import CircularProgress from "@mui/material/CircularProgress";
+import ROUTES from "../../routes/ROUTES";
+import { useNavigate } from "react-router-dom";
 const MyCardsPage = () => {
   const [myCards, setMyCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasCard, setHasCards] = useState(false);
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
+  const navigate = useNavigate();
   useEffect(() => {
     const getMyCards = async () => {
       try {
@@ -27,8 +29,28 @@ const MyCardsPage = () => {
     };
     getMyCards();
   }, [userData]);
-  const handleDeleteCard = () => {};
-  const handleEditCard = () => {};
+  const handleDeleteCard = async (_id) => {
+    try {
+      const { data } = await axios.delete("/cards/" + _id);
+      console.log("Card Deleted From My Cards", data);
+      setMyCards((myCardsCopy) =>
+        myCardsCopy.filter((card) => card._id !== _id)
+      );
+    } catch (err) {
+      console.log("Error From Delete Card", err);
+    }
+  };
+  const handleEditCard = (_id) => {
+    navigate(`${ROUTES.EDITCARD}/${_id}`);
+  };
+  const handleLikeCard = async (_id, cardDetails) => {
+    try {
+      const { data } = await axios.patch("/cards/" + _id, cardDetails);
+      console.log("Data from Like Card", data);
+    } catch (err) {
+      console.log("Error from like card", err);
+    }
+  };
 
   return (
     <>
@@ -37,10 +59,12 @@ const MyCardsPage = () => {
         <Typography variant="body2" sx={{ marginBottom: "3rem" }}>
           Here you can see all of your cards
         </Typography>
-        {isLoading && (
+        {isLoading ? (
           <Box sx={{ width: "100%" }}>
             <CircularProgress />
           </Box>
+        ) : (
+          <Typography>You don't have any cards</Typography>
         )}
         <Container>
           <Grid container spacing={2} justifyContent="center">
@@ -67,6 +91,7 @@ const MyCardsPage = () => {
                   cardNumber={card.cardNumber}
                   onDeleteCard={handleDeleteCard}
                   onEditCard={handleEditCard}
+                  onLikeCard={handleLikeCard}
                 />
               </Grid>
             ))}

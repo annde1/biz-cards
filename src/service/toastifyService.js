@@ -74,6 +74,18 @@ const successfullRegistration = () => {
     theme: "light",
   });
 };
+const cardDeletedToast = () => {
+  toast.success("The card was removed from favorites", {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+};
 export {
   cardCratedToast,
   loginToast,
@@ -81,4 +93,5 @@ export {
   deleteProfileToast,
   registerToast,
   successfullRegistration,
+  cardDeletedToast,
 };
