@@ -7,6 +7,7 @@ import FooterComponent from "./footer/FooterComponent";
 import tmc from "twin-moon-color";
 import { useDispatch, useSelector } from "react-redux";
 import { darkThemeActions } from "../store/darkThemeSlice";
+import Box from "@mui/material/Box";
 
 const LayoutComponent = ({ children }) => {
   // const [isDarkTheme, setIsDarkTheme] = useState(false);

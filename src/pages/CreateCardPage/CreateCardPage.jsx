@@ -34,9 +34,9 @@ const CreateCardPage = () => {
     zip: "",
   });
   const [error, setError] = useState({});
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
+  // useEffect(() => {
+  //   console.log(error);
+  // }, [error]);
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     setInputValue((currentState) => ({
@@ -154,7 +154,7 @@ const CreateCardPage = () => {
             value={inputsValue.web}
           />
           <TextField
-            id="mail"
+            id="email"
             label="Email"
             variant="outlined"
             sx={{ mt: "10px", width: "100%" }}

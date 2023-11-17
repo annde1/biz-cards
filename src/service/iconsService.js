@@ -9,6 +9,8 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import AddIcon from "@mui/icons-material/Add";
 import HomeIcon from "@mui/icons-material/Home";
 import Person2Icon from "@mui/icons-material/Person2";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 const getIcon = (to) => {
   switch (to) {
     case ROUTES.LOGIN:
@@ -22,13 +24,15 @@ const getIcon = (to) => {
     case ROUTES.ABOUT:
       return <InfoIcon />;
     case ROUTES.EDITPROFILE:
-      return <EditNoteIcon />;
+      return <ManageAccountsIcon />;
     case ROUTES.CREATECARD:
       return <AddIcon />;
     case ROUTES.HOME:
       return <HomeIcon />;
     case ROUTES.MYPROFILE:
       return <Person2Icon />;
+    case ROUTES.CRM:
+      return <PeopleAltIcon />;
 
     default:
       return null; // For routes with no specific icon

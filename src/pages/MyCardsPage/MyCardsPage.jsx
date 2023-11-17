@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 const MyCardsPage = () => {
   const [myCards, setMyCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [hasCard, setHasCards] = useState(false);
+  const [hasCard, setHasCards] = useState("");
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
   const navigate = useNavigate();
   useEffect(() => {
@@ -28,7 +28,7 @@ const MyCardsPage = () => {
       }
     };
     getMyCards();
-  }, [userData]);
+  }, [userData, myCards.length]);
   const handleDeleteCard = async (_id) => {
     try {
       const { data } = await axios.delete("/cards/" + _id);
@@ -59,14 +59,18 @@ const MyCardsPage = () => {
         <Typography variant="body2" sx={{ marginBottom: "3rem" }}>
           Here you can see all of your cards
         </Typography>
-        {isLoading ? (
+        {isLoading && (
           <Box sx={{ width: "100%" }}>
             <CircularProgress />
           </Box>
-        ) : (
-          <Typography>You don't have any cards</Typography>
         )}
+
         <Container>
+          {myCards.length === 0 && !isLoading && (
+            <Typography variant="body2" sx={{ marginTop: "1rem" }}>
+              You don't have any cards yet.
+            </Typography>
+          )}
           <Grid container spacing={2} justifyContent="center">
             {myCards.map((card) => (
               <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>

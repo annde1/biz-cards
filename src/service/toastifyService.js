@@ -86,6 +86,18 @@ const cardDeletedToast = () => {
     theme: "light",
   });
 };
+const successToast = (text) => {
+  toast.success(`${text}`, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+};
 export {
   cardCratedToast,
   loginToast,
@@ -94,4 +106,5 @@ export {
   registerToast,
   successfullRegistration,
   cardDeletedToast,
+  successToast,
 };

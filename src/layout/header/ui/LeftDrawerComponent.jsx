@@ -15,6 +15,7 @@ import {
   cardsLinkBusiness,
   cardsLinkNotBusiness,
   alwaysLinks,
+  adminLinks,
 } from "../../myLinks";
 import { useSelector } from "react-redux";
 import getIcon from "../../../service/iconsService";
@@ -25,8 +26,10 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
   const isBusiness = useSelector(
     (store) => store.authSlice.userData?.isBusiness
   );
+  const isAdmin = useSelector((store) => store.authSlice.userData?.isAdmin);
   console.log(isLoggedIn);
   console.log(isBusiness);
+  console.log(isAdmin);
   const list = () => (
     <Box
       sx={{
@@ -58,6 +61,19 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
       <List>
         {isLoggedIn &&
           profileLinks.map((link) => (
+            <ListItem key={link.to} disablePadding>
+              <ListItemButton
+                component={Link}
+                to={link.to}
+                sx={{ color: "white" }}
+              >
+                <ListItemText primary={link.children} />
+                {getIcon(link.to)}
+              </ListItemButton>
+            </ListItem>
+          ))}
+        {isAdmin &&
+          adminLinks.map((link) => (
             <ListItem key={link.to} disablePadding>
               <ListItemButton
                 component={Link}

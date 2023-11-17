@@ -7,48 +7,75 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DeleteUserModal from "../../components/DeleteUserModal";
+import { normalizeData } from "./normalizeName";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import "../../App.css";
 const AdminPage = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [expanded, setExpanded] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [actionType, setActiontype] = useState(null);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const handleOpen = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
   useEffect(() => {
     const getAllUsers = async () => {
       try {
         const { data } = await axios.get("/users");
         console.log(data);
-        setAllUsers(data);
+        const normalized = normalizeData(data);
+        setAllUsers(normalized);
       } catch (err) {
         console.log("Error CRM", err);
       }
     };
     getAllUsers();
   }, []);
-  const handleDeleteClick = () => {
-    // try {
-    //   const { data } = await axios.delete("/users/" + _id);
-    //   console.log("User deleted", data);
-    //   setAllUsers((usersCopy) => usersCopy.filter((user) => user._id !== _id));
-    // } catch (err) {
-    //   console.log("Delete user err from ADMIN", err);
-    // }
-    setShowModal(true);
+
+  //Action of deleting and editing user is possible only on non admin users
+  const handleUserAction = async (userId, actionType) => {
+    try {
+      if (actionType === "delete") {
+        const { data } = await axios.delete("/users/" + userId);
+        console.log("USER DELETED", data);
+        setAllUsers((usersCopy) =>
+          usersCopy.filter((user) => user._id !== userId)
+        );
+      } else if (actionType === "edit") {
+        await axios.patch("/users/" + userId);
+        console.log("USER UPDATED SUCCESFULLY");
+        //Fetch all users again so list of users will be up to date
+        const { data } = await axios.get("/users");
+        setAllUsers(data);
+        console.log("USER LIST UPDATED ", data);
+      }
+      //reset the state of selected user and action type
+      setSelectedUserId(null);
+      setActiontype(null);
+    } catch (err) {
+      console.log("ERROR PERFORMING USER ACTION", err);
+    }
   };
 
-  const handleEditUserStatus = async (_id) => {};
+  const handleOpenModal = (userId, actionType) => {
+    setShowConfirmationModal(true);
+    setActiontype(actionType);
+    setSelectedUserId(userId);
+  };
+
+  const handleCloseModal = () => {
+    setShowConfirmationModal(false);
+    setActiontype(null);
+    setSelectedUserId(null);
+  };
+
   return (
     <Box
       sx={{
@@ -58,8 +85,20 @@ const AdminPage = () => {
         alignItems: "center",
       }}
     >
-      {showModal && (
-        <DeleteUserModal open={showModal} handleClose={handleClose} />
+      {showConfirmationModal && (
+        <ConfirmationModal
+          open={showConfirmationModal}
+          handleClose={handleCloseModal}
+          userId={selectedUserId}
+          actionType={actionType}
+          handleConfirm={handleUserAction}
+        >
+          <Typography variant="h6" sx={{ textAlign: "center" }}>
+            {actionType === "delete"
+              ? "Are you sure you want to delete this user?"
+              : "Are you sure you want to edit the business status of this user?"}
+          </Typography>
+        </ConfirmationModal>
       )}
       <Box sx={{ marginTop: "3rem", marginBottom: "3rem" }}>
         <Typography variant="h4">User Managment System</Typography>
@@ -78,11 +117,13 @@ const AdminPage = () => {
               paddingRight: "2rem",
               marginBottom: "1rem",
             }}
+            className={expanded === user._id && "accordionBorder"}
           >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1bh-content"
               id="panel1bh-header"
+              sx={{ border: "none" }}
             >
               <Typography sx={{ width: "33%", flexShrink: 0 }}>
                 {user.name.first} {user.name.last}
@@ -92,18 +133,25 @@ const AdminPage = () => {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                <IconButton>
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    handleDeleteClick();
-                  }}
-                >
-                  <DeleteIcon></DeleteIcon>
-                </IconButton>
-              </Box>
+              {!user.isAdmin && (
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <IconButton
+                    onClick={() => {
+                      handleOpenModal(user._id, "edit");
+                    }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      handleOpenModal(user._id, "delete");
+                    }}
+                  >
+                    <DeleteIcon></DeleteIcon>
+                  </IconButton>
+                </Box>
+              )}
+
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Typography variant="h5" sx={{ marginBottom: "1rem" }}>
                   User Details

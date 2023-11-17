@@ -62,7 +62,6 @@ const RegisterPage = () => {
       let request = normalizeData(inputsValue);
       const { data } = await axios.post("/users", request);
       console.log("data", data);
-      console.log(data.response.data);
       successfullRegistration();
       navigate(ROUTES.LOGIN);
     } catch (err) {

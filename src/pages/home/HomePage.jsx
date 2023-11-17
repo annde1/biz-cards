@@ -29,6 +29,7 @@ const HomePage = () => {
       .then((data) => {
         initialDataFromServer = data;
         setDataFromServer(data);
+        console.log(data);
         setIsLoading(false);
       })
       .catch((err) => {

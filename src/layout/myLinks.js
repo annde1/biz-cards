@@ -7,7 +7,7 @@ const myLinks = [
   { to: ROUTES.ABOUT, children: "About" },
 ];
 
-const adminLinks = [{ to: ROUTES.CRM, children: "CRMs" }];
+const adminLinks = [{ to: ROUTES.CRM, children: "CRM" }];
 const alwaysLinks = [
   { to: ROUTES.ABOUT, children: "About" },
   { to: ROUTES.HOME, children: "Home" },

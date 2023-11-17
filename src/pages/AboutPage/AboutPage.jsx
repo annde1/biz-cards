@@ -4,7 +4,7 @@ import AccordionComponent from "../../components/Acordion";
 const AboutPage = () => {
   return (
     <>
-      <Box style={{ textAlign: "center" }}>
+      <Box style={{ textAlign: "center", marginTop: "3rem" }}>
         <Typography variant="h3">About Page</Typography>
         <Typography
           variant="body1"
@@ -25,25 +25,24 @@ const AboutPage = () => {
       <AccordionComponent title="Profile information">
         <List>
           <ListItem disablePadding>
-            Edit Profile: Update your personal information, excluding email and
-            password.
+            Update your personal information, excluding email and password.
           </ListItem>
           <ListItem disablePadding>
-            My Profile: View detailed information about your profile, including
-            your created business cards.
+            View detailed information about your profile, including your created
+            business cards.
           </ListItem>
         </List>
       </AccordionComponent>
       <AccordionComponent title="Card Information">
         <List>
           <ListItem disablePadding>
-            My Cards: Access and manage your own business cards.
+            Access and manage your own business cards.
           </ListItem>
           <ListItem disablePadding>
-            Create Card: Creae a new business card to showcase your business.
+            Create a new business card to showcase your business.
           </ListItem>
           <ListItem disablePadding>
-            Edit and Delete Card: Edit and delete cards that you've created.
+            Edit and delete cards that you've created.
           </ListItem>
         </List>
       </AccordionComponent>
