@@ -6,7 +6,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
   Paper,
 } from "@mui/material";
@@ -14,21 +13,18 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { normalizeDataProfilePage } from "./myProfileNormalization";
-import styles from "./styles.module.css";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import IconButton from "@mui/material/IconButton";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import { deleteProfileToast } from "../../service/toastifyService";
 import { authActions } from "../../store/authSlice";
 import { clearToken } from "../../service/storageService";
-import { clear } from "@testing-library/user-event/dist/clear";
 import Button from "@mui/material/Button";
 
 const MyProfilePage = () => {
   const [profileData, setProfileData] = useState({});
   const userData = useSelector((store) => store.authSlice.userData);
+  const isAdmin = useSelector((store) => store.authSlice.userData?.isAdmin);
+  console.log(isAdmin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -126,6 +122,7 @@ const MyProfilePage = () => {
             onClick={() => {
               handleDeleteProfile();
             }}
+            disabled={isAdmin}
           >
             Delete Profile
           </Button>

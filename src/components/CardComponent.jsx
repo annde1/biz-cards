@@ -15,10 +15,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ModalComponent from "./ModalComponent";
-import { current } from "@reduxjs/toolkit";
 
 const CardComponent = ({
   _id,
@@ -39,7 +37,6 @@ const CardComponent = ({
   zip,
   alt,
   like,
-  cardNumber,
   onDeleteCard,
   onEditCard,
   onLikeCard,
@@ -49,7 +46,7 @@ const CardComponent = ({
   const isLoggedIn = useSelector((store) => store.authSlice.loggedIn);
   const userId = useSelector((store) => store.authSlice.userData?._id);
   const isOwner = userId === user_id;
-  // console.log(like);
+
   const handleCloseModal = () => {
     setIsOpenModal(false);
   };
@@ -61,10 +58,9 @@ const CardComponent = ({
     onDeleteCard(_id);
   };
   const handleClickEditCard = () => {
-    // console.log("move to edit card page");
     onEditCard(_id);
   };
-  //TODO: Finish
+
   const handleLikeCardClick = async () => {
     const cardDetails = {
       title: title,
@@ -93,9 +89,7 @@ const CardComponent = ({
       console.log(err);
     }
   };
-  // useEffect(() => {
-  //   console.log(isLiked);
-  // }, [isLiked]);
+
   return (
     <Card>
       <CardActionArea>
@@ -142,6 +136,7 @@ const CardComponent = ({
               country={country}
               street={street}
               email={email}
+              address={address}
             />
           )}
           {isLoggedIn && (

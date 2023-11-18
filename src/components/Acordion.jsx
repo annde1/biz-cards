@@ -3,10 +3,11 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import "../App.css";
 const AccordionComponent = (props) => {
   return (
     <>
-      <Accordion sx={{ marginBottom: "1rem", border: "none" }}>
+      <Accordion sx={{ marginBottom: "1rem" }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"

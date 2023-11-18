@@ -3,12 +3,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { useState } from "react";
 import { Divider } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import { Description } from "@mui/icons-material";
-import CloseIcon from "@mui/icons-material/Close";
 import Link from "@mui/material/Link";
+import { useState, useEffect } from "react";
+import MapComponent from "./MapComponent";
 const style = {
   position: "absolute",
   top: "50%",
@@ -16,7 +14,6 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "#f9f8f7",
-  // border: "2px solid #000",
   borderRadius: "10px",
   boxShadow: 24,
   p: 4,
@@ -26,9 +23,7 @@ const ModalComponent = ({
   handleClose,
   address,
   description,
-  image,
   title,
-  subtitle,
   web,
   street,
   houseNumber,
@@ -37,6 +32,36 @@ const ModalComponent = ({
   email,
 }) => {
   console.log(address);
+  const [coords, setCoords] = useState({});
+  const [isMapLoading, setIsMapLoading] = useState(true);
+  useEffect(() => {
+    const fetchCoords = async () => {
+      try {
+        const response = await fetch(
+          `https://geocode.search.hereapi.com/v1/geocode?q=${encodeURIComponent(
+            address
+          )}&apiKey=vkO4zw12R9oMrqqrQIGprb2uwuKIUSt6V8bViZmTXNM`
+        );
+        const data = await response.json();
+        if (data.items && data.items.length > 0) {
+          console.log(data.items.length);
+          const { lat, lng } = data.items[0].access[0];
+          console.log(lat, lng);
+          setCoords({ lat, lng });
+        }
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsMapLoading(false);
+      }
+    };
+    fetchCoords();
+  }, [address]);
+  useEffect(() => {
+    console.log(coords);
+  }, [coords]);
+
   return (
     <div>
       <Modal
@@ -119,6 +144,32 @@ const ModalComponent = ({
               </Typography>
             )}
           </Box>
+          {isMapLoading ? (
+            <Typography>Loading map...</Typography>
+          ) : Object.keys(coords).length > 0 ? (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                marginBottom: "1rem",
+              }}
+            >
+              <Typography sx={{ fontWeight: "bold" }}>Map:</Typography>
+              <MapComponent coords={coords} />
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                marginBottom: "1rem",
+              }}
+            >
+              <Typography sx={{ fontWeight: "bold" }}>Map:</Typography>
+              <Typography>Map is unavailable for this location.</Typography>
+            </Box>
+          )}
+
           <Box
             sx={{
               display: "flex",

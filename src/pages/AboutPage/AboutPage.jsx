@@ -1,6 +1,8 @@
 import { List, ListItem, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import AccordionComponent from "../../components/Acordion";
+import { useState } from "react";
+import "../../App.css";
 const AboutPage = () => {
   return (
     <>

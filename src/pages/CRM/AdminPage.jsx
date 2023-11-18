@@ -13,10 +13,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { normalizeData } from "./normalizeName";
 import ConfirmationModal from "../../components/ConfirmationModal";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import "../../App.css";
 const AdminPage = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [expanded, setExpanded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [actionType, setActiontype] = useState(null);
@@ -29,9 +32,9 @@ const AdminPage = () => {
     const getAllUsers = async () => {
       try {
         const { data } = await axios.get("/users");
-        console.log(data);
         const normalized = normalizeData(data);
         setAllUsers(normalized);
+        setIsLoading(false);
       } catch (err) {
         console.log("Error CRM", err);
       }
@@ -105,9 +108,14 @@ const AdminPage = () => {
         <Typography variant="body1" sx={{ textAlign: "center" }}>
           Manage users from one place
         </Typography>
+        {isLoading && (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <CircularProgress />
+          </Box>
+        )}
       </Box>
-
-      {allUsers.map((user, index) => (
+      {/*TODO: extract this (below) into a component */}
+      {allUsers.map((user) => (
         <div key={user._id} style={{ width: "70vw" }}>
           <Accordion
             expanded={expanded === user._id}
@@ -117,7 +125,7 @@ const AdminPage = () => {
               paddingRight: "2rem",
               marginBottom: "1rem",
             }}
-            className={expanded === user._id && "accordionBorder"}
+            className={expanded === user._id ? "accordionBorder" : ""}
           >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}

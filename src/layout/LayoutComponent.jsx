@@ -1,23 +1,14 @@
-import { useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import HeaderComponent from "./header/HeaderComponent";
 import MainComponent from "./main/MainComponent";
 import FooterComponent from "./footer/FooterComponent";
-import tmc from "twin-moon-color";
 import { useDispatch, useSelector } from "react-redux";
 import { darkThemeActions } from "../store/darkThemeSlice";
-import Box from "@mui/material/Box";
 
 const LayoutComponent = ({ children }) => {
-  // const [isDarkTheme, setIsDarkTheme] = useState(false);
   const isDarkTheme = useSelector((bigPie) => bigPie.darkThemeSlice.darkTheme);
   const dispatch = useDispatch();
-
-  const themes = tmc({
-    "text.headerColor": "#f9f8f7",
-    "text.headerActive": "#f9f8f7",
-  });
 
   const darkTheme = createTheme({
     palette: {
@@ -51,7 +42,6 @@ const LayoutComponent = ({ children }) => {
         onThemeChange={handleThemeChange}
       />
       <MainComponent>{children}</MainComponent>
-      {/* <MainComponent><Homepage /></MainComponent> */}
       <FooterComponent />
     </ThemeProvider>
   );
