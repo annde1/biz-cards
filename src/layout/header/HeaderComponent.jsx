@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Switch } from "@mui/material";
 import ProfileIconComponent from "./ui/ProfileIconComponent";
@@ -21,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import { useEffect } from "react";
 import axios from "axios";
+import MobileMenu from "./ui/MobileMenu";
 import { normalizeUserName } from "./nomralizeUserName";
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -29,19 +29,17 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const [name, setName] = useState({});
   const isLoggedIn = useSelector((bigPie) => bigPie.authSlice.loggedIn);
   const userData = useSelector((store) => store.authSlice.userData?._id);
-  console.log(userData);
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //?? How can I use useLogout hook
+
+  const isMenuOpen = Boolean(anchorEl);
+  const mobileMenuId = "primary-search-account-menu-mobile";
+
   useEffect(() => {
     const getUserData = async () => {
       try {
         if (userData) {
           const { data } = await axios.get("/users/" + userData);
-          console.log(data);
           const normalized = normalizeUserName(data);
           setName(normalized);
         }
@@ -55,11 +53,9 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
@@ -105,7 +101,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
         vertical: "top",
         horizontal: "right",
       }}
-      z
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -127,36 +122,11 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
     </Menu>
   );
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
+    <MobileMenu
+      mobileMoreAnchorEl={mobileMoreAnchorEl}
+      setMobileMoreAnchorEl={setMobileMoreAnchorEl}
+    />
   );
 
   return (
@@ -181,7 +151,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
           >
             BIZ CARDS
           </Typography>
-          {/* <Links /> */}
           <FilterComponent />
           <Box
             sx={{
@@ -195,9 +164,12 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
             <Switch checked={isDarkTheme} onChange={handleThemeChange} />
           </Box>
           <Box sx={{ flexGrow: 1 }} />
-          <Typography>
-            Hello {name.name?.first} {name.name?.last}
-          </Typography>
+          {isLoggedIn && (
+            <Typography>
+              Hello {name.name?.first} {name.name?.last}
+            </Typography>
+          )}
+
           <ProfileIconComponent handleProfileMenuOpen={handleProfileMenuOpen} />
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton

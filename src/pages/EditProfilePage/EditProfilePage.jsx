@@ -12,8 +12,12 @@ import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import { Alert } from "@mui/material";
 import { normalizeProfileData } from "./nomralizeEditProfile";
-import { updateProfileToast } from "../../service/toastifyService";
+import {
+  updateProfileToast,
+  warningToast,
+} from "../../service/toastifyService";
 import { useSelector } from "react-redux";
+import "../../App.css";
 
 const EditProfilePage = () => {
   const [inputsValue, setInputsValue] = useState({
@@ -29,7 +33,6 @@ const EditProfilePage = () => {
     street: "",
     houseNumber: "",
     zip: "",
-    // isBusiness: true,
   });
 
   const [error, setError] = useState({});
@@ -41,42 +44,27 @@ const EditProfilePage = () => {
       [e.target.id]: e.target.value,
     }));
   };
-  // const handleCheckboxChange = (e) => {
-  //   setInputsValue((curr) => ({
-  //     ...curr,
-  //     isBusiness: e.target.checked,
-  //   }));
-  // };
 
   const handleUpdateProfile = async (e) => {
     try {
       e.preventDefault();
       const errors = validateEditProfile(inputsValue);
-      // console.log(errors);
+      console.log(errors);
       setError(errors);
-      // console.log(userData._id);
       let request = normalizeProfileData(inputsValue);
-      // console.log(request);
       if (errors) return;
       if (userData) {
-        const { data } = await axios.put("/users/" + userData._id, request);
-        console.log("data", data);
+        await axios.put("/users/" + userData._id, request);
         updateProfileToast();
         navigate(ROUTES.HOME);
       }
     } catch (err) {
       console.log("Error from edit profile", err);
+      warningToast("Could not update profile");
     }
   };
   return (
-    <Box
-      sx={{
-        marginTop: 8,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <Box className="container">
       <Avatar sx={{ m: 1, bgcolor: "#483078" }}>
         <EditNoteIcon />
       </Avatar>
@@ -253,19 +241,10 @@ const EditProfilePage = () => {
               value={inputsValue.zip}
               onChange={handleInputsChange}
             />
+            {error && error.zip && (
+              <Alert severity="warning">{error.zip}</Alert>
+            )}
           </Grid>
-          {/* <Grid item lg={6} md={6} sm={12} xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={inputsValue.isBusiness}
-                  onChange={handleCheckboxChange}
-                  color="primary"
-                />
-              }
-              label="Business Account"
-            />
-          </Grid> */}
         </Grid>
         <Button
           type="submit"

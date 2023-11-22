@@ -1,6 +1,6 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-//created by Anna
+
 const Error404Page = () => {
   return (
     <Box

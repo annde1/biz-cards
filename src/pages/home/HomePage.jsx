@@ -8,9 +8,10 @@ import homePageNormalization from "./homePageNormalization";
 import { useSelector } from "react-redux";
 import useQueryParams from "../../hooks/useQueryParams";
 import CircularProgress from "@mui/material/CircularProgress";
+import { warningToast, successToast } from "../../service/toastifyService";
 import Box from "@mui/material/Box";
-
 let initialDataFromServer = [];
+
 const HomePage = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,13 +30,13 @@ const HomePage = () => {
       .then((data) => {
         initialDataFromServer = data;
         setDataFromServer(data);
-        console.log(data);
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log("err", err);
+        // console.log("err", err);
       });
   }, [userData]);
+
   useEffect(() => {
     if (!initialDataFromServer.length) return;
     const filter = query.filter ? query.filter : "";
@@ -43,14 +44,17 @@ const HomePage = () => {
       initialDataFromServer.filter((card) => card.title.startsWith(filter))
     );
   }, [query]);
+
   const handleDeleteCard = async (_id) => {
     try {
-      const { data } = await axios.delete("/cards/" + _id);
+      await axios.delete("/cards/" + _id);
       setDataFromServer((dataFromServerCopy) =>
         dataFromServerCopy.filter((card) => card._id !== _id)
       );
+      successToast("Card deleted successfully.");
     } catch (err) {
       console.log("Error From Delete Card", err);
+      warningToast("Something went wrong. Could not delete the card");
     }
   };
 
@@ -59,10 +63,10 @@ const HomePage = () => {
   };
   const handleLikeCard = async (_id, cardDetails) => {
     try {
-      const { data } = await axios.patch("/cards/" + _id, cardDetails);
-      console.log("Data from Like Card", data);
+      await axios.patch("/cards/" + _id, cardDetails);
     } catch (err) {
       console.log("Error from like card", err);
+      warningToast("Something went wrong. Could not like the card.");
     }
   };
 

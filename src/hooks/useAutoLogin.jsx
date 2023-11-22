@@ -9,7 +9,6 @@ const useAutoLogin = () => {
   return async (skipTokenTest = false) => {
     try {
       const token = getToken();
-      // console.log("token!!", token);
       if (!token) return;
       const dataFromToken = jwtDecode(token);
       if (skipTokenTest) await axios.get(`/users/${dataFromToken._id}`);

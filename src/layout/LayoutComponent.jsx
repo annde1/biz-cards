@@ -4,7 +4,7 @@ import HeaderComponent from "./header/HeaderComponent";
 import MainComponent from "./main/MainComponent";
 import FooterComponent from "./footer/FooterComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { darkThemeActions } from "../store/darkThemeSlice";
+import { themeActions } from "../store/darkThemeSlice";
 
 const LayoutComponent = ({ children }) => {
   const isDarkTheme = useSelector((bigPie) => bigPie.darkThemeSlice.darkTheme);
@@ -24,15 +24,13 @@ const LayoutComponent = ({ children }) => {
       secondary: {
         main: "#f9f8f7",
       },
-      background: {
-        footer: "#483078",
-      },
     },
   });
 
-  const handleThemeChange = (checked) => {
-    dispatch(darkThemeActions.changeTheme());
+  const handleThemeChange = () => {
+    dispatch(themeActions.toggleDarkTheme());
   };
+  console.log(isDarkTheme);
 
   return (
     <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>

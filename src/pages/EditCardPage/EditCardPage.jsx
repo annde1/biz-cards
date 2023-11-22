@@ -11,15 +11,17 @@ import { Link, useParams } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import axios from "axios";
 import { validateCard } from "../../validation/cardValidation";
+import { normalizeCardData } from "../CreateCardPage/normalizeCardData";
+import { successToast, warningToast } from "../../service/toastifyService";
+import { useNavigate } from "react-router-dom";
+import "../../App.css";
 
 const EditCardPage = () => {
-  //TODO: Cleaning up this component: normalize data, extract components
   const [inputsValue, setInputValue] = useState({
     title: "",
     subtitle: "",
     phone: "",
-    add: "",
-    mail: "",
+    email: "",
     description: "",
     web: "",
     url: "",
@@ -34,6 +36,7 @@ const EditCardPage = () => {
   const [fetchedCardData, setFetchedCardData] = useState(null);
   const [error, setError] = useState({});
   const { id: _id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getCardById = async () => {
@@ -46,42 +49,28 @@ const EditCardPage = () => {
     };
     getCardById();
   }, [_id]);
+
   const handleInputChange = (e) => {
     setInputValue((currentState) => ({
       ...currentState,
       [e.target.id]: e.target.value,
     }));
   };
+
   const handleUpdateChangesClick = async (e) => {
-    //TODO: normalization for data
     try {
       e.preventDefault();
       const errors = validateCard(inputsValue);
+      console.log(errors);
       setError(errors);
       if (errors) return;
-      const { data } = await axios.put("/cards/" + _id, {
-        title: inputsValue.title,
-        subtitle: inputsValue.subtitle,
-        description: inputsValue.description,
-        phone: inputsValue.phone,
-        email: inputsValue.mail,
-        web: inputsValue.web,
-        image: {
-          url: inputsValue.url,
-          alt: inputsValue.alt,
-        },
-        address: {
-          state: inputsValue.state,
-          country: inputsValue.country,
-          city: inputsValue.city,
-          street: inputsValue.street,
-          houseNumber: inputsValue.houseNumber,
-          zip: +inputsValue.zip,
-        },
-      });
-      console.log("data from response", data);
+      const normalizedCardData = normalizeCardData(inputsValue);
+      await axios.put("/cards/" + _id, normalizedCardData);
+      successToast("Card updated successfully!");
+      navigate(ROUTES.HOME);
     } catch (err) {
-      console.log("err", err.response);
+      // console.log("err", err.response);
+      warningToast("Could not update the card");
     }
   };
   const getPlaceholderValue = (fieldName) => {
@@ -181,12 +170,12 @@ const EditCardPage = () => {
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <TextField
-            id="mail"
+            id="email"
             label="Email"
             variant="outlined"
             sx={{ mt: "10px", width: "100%" }}
             onChange={handleInputChange}
-            value={inputsValue.mail}
+            value={inputsValue.email}
             placeholder={getPlaceholderValue("email")}
             required
           />
@@ -257,6 +246,7 @@ const EditCardPage = () => {
             <Alert severity="warning">{error.city}</Alert>
           )}
         </Grid>
+        {/*TODO: extract one like this into a component (InputComponent) pass as props the error */}
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <TextField
             id="street"
@@ -303,13 +293,8 @@ const EditCardPage = () => {
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <Button
             variant="contained"
-            sx={{
-              mt: 2,
-              width: "100%",
-              ml: "0%",
-              bgcolor: "#483078",
-              color: "white",
-            }}
+            sx={{ mt: 2 }}
+            className="btn"
             onClick={handleUpdateChangesClick}
           >
             Update Changes
@@ -317,16 +302,7 @@ const EditCardPage = () => {
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <Link to={ROUTES.HOME}>
-            <Button
-              variant="contained"
-              sx={{
-                mt: 2,
-                width: "100%",
-                ml: "0%",
-                bgcolor: "#483078",
-                color: "white",
-              }}
-            >
+            <Button variant="contained" className="btn" sx={{ mt: 2 }}>
               Discard Changes
             </Button>
           </Link>

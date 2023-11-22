@@ -21,12 +21,11 @@ const normalizeData = (users) => {
           user.address.street.slice(1),
       },
       createdAt: new Date(user.createdAt).toLocaleString("en-US", {
-        day: "numeric",
-        month: "long",
+        day: "2-digit",
+        month: "2-digit",
         year: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
         hour12: false,
       }),
     };

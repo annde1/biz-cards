@@ -98,6 +98,19 @@ const successToast = (text) => {
     theme: "light",
   });
 };
+
+const warningToast = (text) => {
+  toast.error(`${text}`, {
+    position: "top-right",
+    autoClose: false,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+};
 export {
   cardCratedToast,
   loginToast,
@@ -107,4 +120,5 @@ export {
   successfullRegistration,
   cardDeletedToast,
   successToast,
+  warningToast,
 };

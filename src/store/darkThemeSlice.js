@@ -1,22 +1,21 @@
+// darkThemeSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   darkTheme: false,
 };
 
-const darkTheme = createSlice({
-  name: "auth",
+const darkThemeSlice = createSlice({
+  name: "darkTheme",
   initialState,
   reducers: {
-    //collection of functions to setState
-    changeTheme(state) {
+    toggleDarkTheme(state) {
+      console.log("BORE TOGGLE", state.darkTheme);
       state.darkTheme = !state.darkTheme;
+      console.log("After toggle", state.darkTheme);
     },
   },
 });
 
-//export the set functions for the components to make use of the actions
-export const darkThemeActions = darkTheme.actions;
-
-//in reducer we have all the necessary data to connect with the big pie
-export default darkTheme.reducer;
+export const themeActions = darkThemeSlice.actions;
+export default darkThemeSlice.reducer;

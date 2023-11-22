@@ -28,10 +28,8 @@ const ModalComponent = ({
   street,
   houseNumber,
   city,
-  country,
   email,
 }) => {
-  console.log(address);
   const [coords, setCoords] = useState({});
   const [isMapLoading, setIsMapLoading] = useState(true);
   useEffect(() => {
@@ -44,23 +42,18 @@ const ModalComponent = ({
         );
         const data = await response.json();
         if (data.items && data.items.length > 0) {
-          console.log(data.items.length);
           const { lat, lng } = data.items[0].access[0];
-          console.log(lat, lng);
           setCoords({ lat, lng });
         }
-        console.log(data);
       } catch (err) {
         console.log(err);
+        setCoords({});
       } finally {
         setIsMapLoading(false);
       }
     };
     fetchCoords();
   }, [address]);
-  useEffect(() => {
-    console.log(coords);
-  }, [coords]);
 
   return (
     <div>

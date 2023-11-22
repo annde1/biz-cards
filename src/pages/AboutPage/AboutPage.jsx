@@ -1,8 +1,8 @@
 import { List, ListItem, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import AccordionComponent from "../../components/Acordion";
-import { useState } from "react";
 import "../../App.css";
+
 const AboutPage = () => {
   return (
     <>
@@ -18,11 +18,9 @@ const AboutPage = () => {
         </Typography>
       </Box>
       <AccordionComponent title="How to register">
-        <Typography>
-          To get started, register for an account on our platform. Click on the
-          "Register" button and follow the simple registration process. Make
-          sure to provide accurate information to enhance your experience.
-        </Typography>
+        To get started, register for an account on our platform. Click on the
+        "Register" button and follow the simple registration process. Make sure
+        to provide accurate information to enhance your experience.
       </AccordionComponent>
       <AccordionComponent title="Profile information">
         <List>
@@ -51,4 +49,5 @@ const AboutPage = () => {
     </>
   );
 };
+
 export default AboutPage;

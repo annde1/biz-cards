@@ -13,7 +13,6 @@ import InfoIcon from "@mui/icons-material/Info";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import ModalComponent from "./ModalComponent";
@@ -160,20 +159,6 @@ const CardComponent = ({
       </CardContent>
     </Card>
   );
-};
-
-CardComponent.propTypes = {
-  _id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  subTitle: PropTypes.string,
-  phone: PropTypes.string,
-  address: PropTypes.string,
-  img: PropTypes.string,
-  alt: PropTypes.string,
-  like: PropTypes.bool,
-  cardNumber: PropTypes.number,
-  onDeleteCard: PropTypes.func.isRequired,
-  onEditCard: PropTypes.func.isRequired,
 };
 
 export default CardComponent;

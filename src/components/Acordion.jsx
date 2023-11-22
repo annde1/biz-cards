@@ -4,6 +4,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "../App.css";
+
 const AccordionComponent = (props) => {
   return (
     <>
@@ -22,4 +23,5 @@ const AccordionComponent = (props) => {
     </>
   );
 };
+
 export default AccordionComponent;

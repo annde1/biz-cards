@@ -1,5 +1,5 @@
 // import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -29,9 +29,6 @@ const LoginPage = () => {
   const [authError, setAuthError] = useState("");
   const navigate = useNavigate();
   const autoLogin = useAutoLogin();
-  useEffect(() => {
-    console.log(errorsState);
-  }, [errorsState]);
 
   const handleSubmit = async (event) => {
     try {
@@ -40,7 +37,6 @@ const LoginPage = () => {
         email: emailValue,
         password: passwordValue,
       });
-      console.log("joiResponse", joiResponse);
       setErrorsState(joiResponse);
       if (joiResponse) return;
       let { data } = await axios.post("/users/login", {
@@ -48,12 +44,10 @@ const LoginPage = () => {
         password: passwordValue,
       });
       storeToken(data, rememberMe);
-      console.log("DATA FROM LOGIN", data);
       loginToast();
       autoLogin(true); //skip token test
       navigate(ROUTES.HOME);
     } catch (err) {
-      console.log("err from login", err.response);
       if (err.response.status === 400) setAuthError(err.response.data);
     }
   };
@@ -66,7 +60,7 @@ const LoginPage = () => {
   const handleRememberMeChange = () => {
     setRememberMe(!rememberMe);
   };
-  /* template lvl for html */
+
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />

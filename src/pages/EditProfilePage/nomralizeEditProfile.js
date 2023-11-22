@@ -16,9 +16,8 @@ const normalizeProfileData = (inputsValue) => {
       city: inputsValue.city,
       street: inputsValue.street,
       houseNumber: inputsValue.houseNumber,
-      zip: inputsValue.zip,
+      zip: +inputsValue.zip,
     },
-    // isBusiness: inputsValue.isBusiness,
   };
 };
 export { normalizeProfileData };

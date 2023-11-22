@@ -9,26 +9,26 @@ import homePageNormalization from "../home/homePageNormalization";
 import CircularProgress from "@mui/material/CircularProgress";
 import ROUTES from "../../routes/ROUTES";
 import { useNavigate } from "react-router-dom";
+import { warningToast, successToast } from "../../service/toastifyService";
 const MyCardsPage = () => {
   const [myCards, setMyCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [hasCard, setHasCards] = useState("");
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
   const navigate = useNavigate();
   useEffect(() => {
     const getMyCards = async () => {
       try {
         const { data } = await axios.get("/cards/my-cards");
-        console.log(data);
         if (userData) homePageNormalization(data, userData._id);
         setMyCards(data);
         setIsLoading(false);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
     getMyCards();
   }, [userData, myCards.length]);
+
   const handleDeleteCard = async (_id) => {
     try {
       const { data } = await axios.delete("/cards/" + _id);
@@ -36,8 +36,10 @@ const MyCardsPage = () => {
       setMyCards((myCardsCopy) =>
         myCardsCopy.filter((card) => card._id !== _id)
       );
+      successToast("Card was deleted successfully.");
     } catch (err) {
       console.log("Error From Delete Card", err);
+      warningToast("Something went wrong. Could not delete the card.");
     }
   };
   const handleEditCard = (_id) => {
@@ -45,10 +47,10 @@ const MyCardsPage = () => {
   };
   const handleLikeCard = async (_id, cardDetails) => {
     try {
-      const { data } = await axios.patch("/cards/" + _id, cardDetails);
-      console.log("Data from Like Card", data);
+      await axios.patch("/cards/" + _id, cardDetails);
     } catch (err) {
-      console.log("Error from like card", err);
+      // console.log("Error from like card", err);
+      warningToast("Something went wrong. Could not like the card.");
     }
   };
 

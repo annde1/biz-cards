@@ -21,7 +21,6 @@ const getToken = () => {
   }
 };
 
-//A function that retrieves from local storage or session storage the token of user and deletes it
 const clearToken = () => {
   if (isLocalStorage()) {
     localStorage.removeItem(TOKEN);

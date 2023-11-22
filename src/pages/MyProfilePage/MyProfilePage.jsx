@@ -19,12 +19,17 @@ import { deleteProfileToast } from "../../service/toastifyService";
 import { authActions } from "../../store/authSlice";
 import { clearToken } from "../../service/storageService";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const MyProfilePage = () => {
   const [profileData, setProfileData] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [actionType, setActionType] = useState(null);
   const userData = useSelector((store) => store.authSlice.userData);
+  const userId = useSelector((store) => store.authSlice.userData?._id);
   const isAdmin = useSelector((store) => store.authSlice.userData?.isAdmin);
-  console.log(isAdmin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -41,23 +46,60 @@ const MyProfilePage = () => {
     };
     getUserData();
   }, [userData]);
+
   const handleEditProfile = () => {
     navigate(ROUTES.EDITPROFILE);
   };
-  const handleDeleteProfile = async () => {
+
+  const handleUserAction = async (userId, actionType) => {
+    console.log("REQUEST");
     try {
-      const { data } = await axios.delete("/users/" + userData._id);
-      console.log("USER DELETED", data);
-      deleteProfileToast();
-      clearToken();
-      dispatch(authActions.logout());
-      navigate(ROUTES.HOME);
+      console.log("before if");
+      console.log(actionType);
+      if (actionType === "delete") {
+        await axios.delete("/users/" + userId);
+        deleteProfileToast();
+        clearToken();
+        dispatch(authActions.logout());
+        navigate(ROUTES.HOME);
+      } else if (actionType === "edit") {
+        await axios.patch("/users/" + userId);
+        setProfileData((prevData) => ({
+          ...prevData,
+          isBusiness: !prevData.isBusiness,
+        }));
+      }
+      setActionType(null);
     } catch (err) {
-      console.log("ERROR FROM DELETE USER", err);
+      console.log(err);
     }
   };
+  const handleOpenModal = (actionType) => {
+    setShowModal(true);
+    setActionType(actionType);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setActionType(null);
+  };
+
   return (
     <Box>
+      {showModal && (
+        <ConfirmationModal
+          open={showModal}
+          handleClose={handleCloseModal}
+          userId={userId}
+          handleConfirm={handleUserAction}
+          actionType={actionType}
+        >
+          <Typography>
+            {actionType === "delete"
+              ? "Are you sure you want to delete your profile?"
+              : "Are you sure you want to change your business status?"}
+          </Typography>
+        </ConfirmationModal>
+      )}
       <Box
         sx={{
           display: "flex",
@@ -103,6 +145,9 @@ const MyProfilePage = () => {
                 <TableCell>
                   {profileData.isBusiness ? "Business" : "Regular"}
                 </TableCell>
+                <IconButton onClick={() => handleOpenModal("edit")}>
+                  <EditIcon />
+                </IconButton>
               </TableRow>
             </TableBody>
           </Table>
@@ -120,7 +165,7 @@ const MyProfilePage = () => {
           <Button
             variant="contained"
             onClick={() => {
-              handleDeleteProfile();
+              handleOpenModal("delete");
             }}
             disabled={isAdmin}
           >

@@ -12,7 +12,6 @@ const FilterComponent = () => {
   const handleInputChange = (e) => {
     setTxt(e.target.value);
     navigate(`${ROUTES.HOME}?filter=${e.target.value}`);
-    //localhost:3000/?filter=asdfasdfasd
   };
 
   return (

@@ -2,10 +2,8 @@ import ROUTES from "../routes/ROUTES";
 import LoginIcon from "@mui/icons-material/Login";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import EditIcon from "@mui/icons-material/Edit";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import InfoIcon from "@mui/icons-material/Info";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 import AddIcon from "@mui/icons-material/Add";
 import HomeIcon from "@mui/icons-material/Home";
 import Person2Icon from "@mui/icons-material/Person2";
@@ -14,7 +12,7 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 const getIcon = (to) => {
   switch (to) {
     case ROUTES.LOGIN:
-      return <LoginIcon />; // Use the HomeIcon for the HOME route
+      return <LoginIcon />;
     case ROUTES.REGISTER:
       return <AppRegistrationIcon />;
     case ROUTES.FAVORITE:
@@ -35,7 +33,7 @@ const getIcon = (to) => {
       return <PeopleAltIcon />;
 
     default:
-      return null; // For routes with no specific icon
+      return null;
   }
 };
 export default getIcon;

@@ -20,8 +20,8 @@ const FooterComponent = () => {
   const isAdmin = useSelector((store) => store.authSlice.userData?.isAdmin);
 
   return (
-    <div style={{ marginTop: "3rem" }}>
-      {isLoggedIn && isBusiness && (
+    <div style={{ marginTop: "3rem", background: "#483078", color: "#f9f8f7" }}>
+      {isLoggedIn && isBusiness && !isAdmin && (
         <>
           <Divider></Divider>
           <BottomNavigation
@@ -74,12 +74,14 @@ const FooterComponent = () => {
             style={{
               paddingTop: "3rem",
               paddingBottom: "3rem",
+              backgroundColor: "#483078",
             }}
           >
             <BottomNavigationAction
               label="About"
               to={ROUTES.ABOUT}
-              icon={<InfoIcon />}
+              icon={<InfoIcon style={{ color: "#f9f8f7" }} />}
+              style={{ color: "#f9f8f7" }}
             />
           </BottomNavigation>
         </>
@@ -90,7 +92,7 @@ const FooterComponent = () => {
           <BottomNavigation
             showLabels
             value={value}
-            onChange={(event, newValue) => {
+            onChange={(newValue) => {
               setValue(newValue);
             }}
             style={{
@@ -99,23 +101,25 @@ const FooterComponent = () => {
               paddingBottom: "3rem",
             }}
           >
-            <Link to={ROUTES.FAVORITE}>
-              <BottomNavigationAction
-                label="Favorites"
-                icon={<FavoriteIcon />}
-              />
-            </Link>
-            <Link to={ROUTES.ABOUT}>
-              <BottomNavigationAction
-                label="About"
-                icon={<InfoIcon style={{ color: "#f9f8f7" }} />}
-                style={{ color: "#f9f8f7" }}
-              />
-            </Link>
+            <BottomNavigationAction
+              label="Favorites"
+              to={ROUTES.FAVORITE}
+              component={Link}
+              icon={<FavoriteIcon style={{ color: "#f9f8f7" }} />}
+              style={{ color: "#f9f8f7" }}
+            />
+
+            <BottomNavigationAction
+              label="About"
+              to={ROUTES.ABOUT}
+              component={Link}
+              icon={<InfoIcon style={{ color: "#f9f8f7" }} />}
+              style={{ color: "#f9f8f7" }}
+            />
           </BottomNavigation>
         </>
       )}
-      {isLoggedIn && isAdmin && !isBusiness && (
+      {isLoggedIn && isAdmin && isBusiness && (
         <>
           <Divider></Divider>
           <BottomNavigation
@@ -134,6 +138,13 @@ const FooterComponent = () => {
               label="Favorites"
               to={ROUTES.FAVORITE}
               icon={<FavoriteIcon style={{ color: "#f9f8f7" }} />}
+              style={{ color: "#f9f8f7" }}
+            />
+            <BottomNavigationAction
+              label="My Cards"
+              icon={<BusinessCenterIcon style={{ color: "#f9f8f7" }} />}
+              to={ROUTES.MYCARDS}
+              component={Link}
               style={{ color: "#f9f8f7" }}
             />
 

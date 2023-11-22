@@ -49,9 +49,9 @@ const editProfileSchema = Joi.object({
   }),
   zip: Joi.number().min(2).max(256).required().messages({
     "number.empty": "Zip is required",
+    "number.base": "Zip must be a number",
     "number.min": "Zip must be at least 2 characters long",
   }),
-  // isBusiness: Joi.boolean().required(),
 });
 
 const validateEditProfile = (inputToCheck) =>

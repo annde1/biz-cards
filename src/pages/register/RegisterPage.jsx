@@ -40,7 +40,6 @@ const RegisterPage = () => {
   const [error, setError] = useState({});
   const navigate = useNavigate();
   const handleInputsChange = (e) => {
-    //step 4
     setInputsValue((currentState) => ({
       ...currentState,
       [e.target.id]: e.target.value,
@@ -60,12 +59,11 @@ const RegisterPage = () => {
       setError(errors);
       if (errors) return;
       let request = normalizeData(inputsValue);
-      const { data } = await axios.post("/users", request);
-      console.log("data", data);
+      await axios.post("/users", request);
       successfullRegistration();
       navigate(ROUTES.LOGIN);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       registerToast(err.response.data);
     }
   };
@@ -304,7 +302,11 @@ const RegisterPage = () => {
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link href="#" variant="body2" style={{ color: "#716f6d" }}>
+            <Link
+              href={ROUTES.LOGIN}
+              variant="body2"
+              style={{ color: "#483078" }}
+            >
               Already have an account? Sign in
             </Link>
           </Grid>

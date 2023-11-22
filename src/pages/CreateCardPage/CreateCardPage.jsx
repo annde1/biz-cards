@@ -1,20 +1,14 @@
-import { useEffect, useState } from "react";
-import {
-  Container,
-  TextField,
-  Grid,
-  Typography,
-  Divider,
-  Button,
-  Paper,
-} from "@mui/material";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { TextField, Grid, Typography, Divider, Button } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import axios from "axios";
 import { cardCratedToast } from "../../service/toastifyService";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 import { validateCard } from "../../validation/cardValidation";
+import { normalizeCardData } from "./normalizeCardData";
+import { warningToast } from "../../service/toastifyService";
 
 const CreateCardPage = () => {
   const [inputsValue, setInputValue] = useState({
@@ -34,9 +28,6 @@ const CreateCardPage = () => {
     zip: "",
   });
   const [error, setError] = useState({});
-  // useEffect(() => {
-  //   console.log(error);
-  // }, [error]);
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     setInputValue((currentState) => ({
@@ -48,35 +39,15 @@ const CreateCardPage = () => {
     try {
       e.preventDefault();
       const errors = validateCard(inputsValue);
-      console.log(errors);
       setError(errors);
-      console.log(errors);
       if (errors) return;
-      const { data } = await axios.post("/cards", {
-        title: inputsValue.title,
-        subtitle: inputsValue.subtitle,
-        description: inputsValue.description,
-        phone: inputsValue.phone,
-        email: inputsValue.email,
-        web: inputsValue.web,
-        image: {
-          url: inputsValue.url,
-          alt: inputsValue.alt,
-        },
-        address: {
-          state: inputsValue.state,
-          country: inputsValue.country,
-          city: inputsValue.city,
-          street: inputsValue.street,
-          houseNumber: inputsValue.houseNumber,
-          zip: +inputsValue.zip,
-        },
-      });
-      console.log("data from response", data);
+      const normalizedCardData = normalizeCardData(inputsValue);
+      await axios.post("/cards", normalizedCardData);
       cardCratedToast();
       navigate(ROUTES.HOME);
     } catch (err) {
-      console.log("err", err.response);
+      // console.log(err);
+      warningToast("Something went wrong. Could not create new card");
     }
   };
   return (
@@ -95,7 +66,6 @@ const CreateCardPage = () => {
       </Typography>
       <Divider sx={{ mb: 3 }} />
       <Grid container spacing={2}>
-        {/* First Column */}
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <TextField
             id="title"

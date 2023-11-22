@@ -8,6 +8,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import { cardDeletedToast } from "../../service/toastifyService";
+import "../../App.css";
+import { warningToast } from "../../service/toastifyService";
 
 const FavoritesPage = () => {
   const [likedCards, setLikedCards] = useState([]);
@@ -22,7 +24,8 @@ const FavoritesPage = () => {
         setLikedCards(likedCards);
         setIsLoading(false);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
+        warningToast("Something went wrong. Could not get favorite cards");
       }
     };
     getCards();
@@ -30,13 +33,14 @@ const FavoritesPage = () => {
 
   const handleDeleteCard = async (_id) => {
     try {
-      const { data } = await axios.delete("/cards/" + _id);
+      await axios.delete("/cards/" + _id);
       setLikedCards((likedCardsCopy) =>
         likedCardsCopy.filter((card) => card._id !== _id)
       );
       cardDeletedToast();
     } catch (err) {
-      console.log("Error From Delete Card", err);
+      // console.log("Error From Delete Card", err);
+      warningToast("Something went wronf. Could not delete the card.");
     }
   };
   const handleEditCard = (_id) => {
@@ -44,17 +48,16 @@ const FavoritesPage = () => {
   };
   const handleLikeCard = async (_id, cardDetails) => {
     try {
-      const { data } = await axios.patch("/cards/" + _id, cardDetails);
-      console.log("CARD DELETED FROM FAVORITES", data);
+      await axios.patch("/cards/" + _id, cardDetails);
       setLikedCards((likedCardsCopy) =>
         likedCardsCopy.filter((card) => card._id !== _id)
       );
       cardDeletedToast();
     } catch (err) {
       console.log("Error from like card", err);
+      warningToast("Something went wrong. Could not like the card.");
     }
   };
-  //TODO: Fix error: Invalid prop 'like'
   return (
     <>
       <Box
@@ -71,6 +74,11 @@ const FavoritesPage = () => {
         <Box sx={{ width: "100%", textAlign: "center" }}>
           <CircularProgress />
         </Box>
+      )}
+      {!isLoading && likedCards.length === 0 && (
+        <Typography className="centerText">
+          You don't have any liked crads
+        </Typography>
       )}
       <Container>
         <Grid container spacing={2} justifyContent="center">

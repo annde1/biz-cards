@@ -14,8 +14,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { normalizeData } from "./normalizeName";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import CircularProgress from "@mui/material/CircularProgress";
-
 import "../../App.css";
+import { warningToast } from "../../service/toastifyService";
+
 const AdminPage = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [expanded, setExpanded] = useState(false);
@@ -23,10 +24,6 @@ const AdminPage = () => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [actionType, setActiontype] = useState(null);
-
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
 
   useEffect(() => {
     const getAllUsers = async () => {
@@ -36,34 +33,37 @@ const AdminPage = () => {
         setAllUsers(normalized);
         setIsLoading(false);
       } catch (err) {
-        console.log("Error CRM", err);
+        // console.log("Error CRM", err);
+        warningToast("Something went wrong. Could not fetch user list");
       }
     };
     getAllUsers();
   }, []);
 
-  //Action of deleting and editing user is possible only on non admin users
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
+  //Action of deleting and editing user is possible only on non admin users. Delete button is not visible in admin users.
   const handleUserAction = async (userId, actionType) => {
     try {
       if (actionType === "delete") {
-        const { data } = await axios.delete("/users/" + userId);
-        console.log("USER DELETED", data);
+        await axios.delete("/users/" + userId);
         setAllUsers((usersCopy) =>
           usersCopy.filter((user) => user._id !== userId)
         );
       } else if (actionType === "edit") {
         await axios.patch("/users/" + userId);
-        console.log("USER UPDATED SUCCESFULLY");
         //Fetch all users again so list of users will be up to date
         const { data } = await axios.get("/users");
         setAllUsers(data);
-        console.log("USER LIST UPDATED ", data);
       }
       //reset the state of selected user and action type
       setSelectedUserId(null);
       setActiontype(null);
     } catch (err) {
-      console.log("ERROR PERFORMING USER ACTION", err);
+      // console.log("ERROR PERFORMING USER ACTION", err);
+      warningToast("Error performing user action");
     }
   };
 

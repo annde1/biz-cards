@@ -4,7 +4,6 @@ import { ToastContainer } from "react-toastify";
 import Router from "./routes/Router";
 import useAutoLogin from "./hooks/useAutoLogin";
 import { useEffect, useState } from "react";
-import { LinearProgress } from "@mui/material";
 
 const App = () => {
   const [doneAuth, setDoneAuth] = useState(false);

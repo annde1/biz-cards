@@ -13,3 +13,16 @@ body {
 .accordionBorder {
   border-top: 5px solid #483078;
 }
+.btn {
+  margin-top: rem;
+  width: 100%;
+  margin-left: 0%;
+  background-color: #483078;
+  color: white;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+}
