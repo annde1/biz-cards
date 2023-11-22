@@ -10,9 +10,7 @@ const darkThemeSlice = createSlice({
   initialState,
   reducers: {
     toggleDarkTheme(state) {
-      console.log("BORE TOGGLE", state.darkTheme);
       state.darkTheme = !state.darkTheme;
-      console.log("After toggle", state.darkTheme);
     },
   },
 });
