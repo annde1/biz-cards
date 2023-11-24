@@ -30,7 +30,6 @@ const LayoutComponent = ({ children }) => {
   const handleThemeChange = () => {
     dispatch(themeActions.toggleDarkTheme());
   };
-  console.log(isDarkTheme);
 
   return (
     <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
@@ -40,7 +39,7 @@ const LayoutComponent = ({ children }) => {
         onThemeChange={handleThemeChange}
       />
       <MainComponent>{children}</MainComponent>
-      <FooterComponent />
+      <FooterComponent isDarkTheme={isDarkTheme} />
     </ThemeProvider>
   );
 };

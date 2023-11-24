@@ -41,7 +41,7 @@ const MyProfilePage = () => {
           setProfileData(normalize);
         }
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
     getUserData();
@@ -145,9 +145,11 @@ const MyProfilePage = () => {
                 <TableCell>
                   {profileData.isBusiness ? "Business" : "Regular"}
                 </TableCell>
-                <IconButton onClick={() => handleOpenModal("edit")}>
-                  <EditIcon />
-                </IconButton>
+                {!isAdmin && (
+                  <IconButton onClick={() => handleOpenModal("edit")}>
+                    <EditIcon />
+                  </IconButton>
+                )}
               </TableRow>
             </TableBody>
           </Table>

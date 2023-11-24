@@ -22,17 +22,14 @@ const MyCardsPage = () => {
         if (userData) homePageNormalization(data, userData._id);
         setMyCards(data);
         setIsLoading(false);
-      } catch (err) {
-        // console.log(err);
-      }
+      } catch (err) {}
     };
     getMyCards();
   }, [userData, myCards.length]);
 
   const handleDeleteCard = async (_id) => {
     try {
-      const { data } = await axios.delete("/cards/" + _id);
-      console.log("Card Deleted From My Cards", data);
+      await axios.delete("/cards/" + _id);
       setMyCards((myCardsCopy) =>
         myCardsCopy.filter((card) => card._id !== _id)
       );
@@ -49,7 +46,6 @@ const MyCardsPage = () => {
     try {
       await axios.patch("/cards/" + _id, cardDetails);
     } catch (err) {
-      // console.log("Error from like card", err);
       warningToast("Something went wrong. Could not like the card.");
     }
   };

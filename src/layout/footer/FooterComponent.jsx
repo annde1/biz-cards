@@ -11,7 +11,7 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { Link } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import { useSelector } from "react-redux";
-const FooterComponent = () => {
+const FooterComponent = ({ isDarkTheme }) => {
   const [value, setValue] = useState(0);
   const isLoggedIn = useSelector((store) => store.authSlice.loggedIn);
   const isBusiness = useSelector(
@@ -20,7 +20,11 @@ const FooterComponent = () => {
   const isAdmin = useSelector((store) => store.authSlice.userData?.isAdmin);
 
   return (
-    <div style={{ marginTop: "3rem", background: "#483078", color: "#f9f8f7" }}>
+    <div
+      style={{
+        marginTop: "3rem",
+      }}
+    >
       {isLoggedIn && isBusiness && !isAdmin && (
         <>
           <Divider></Divider>
@@ -31,7 +35,7 @@ const FooterComponent = () => {
               setValue(newValue);
             }}
             style={{
-              backgroundColor: "#483078",
+              backgroundColor: isDarkTheme ? "#2D2D2D" : "#483078",
               paddingTop: "3rem",
               paddingBottom: "3rem",
             }}
@@ -74,12 +78,13 @@ const FooterComponent = () => {
             style={{
               paddingTop: "3rem",
               paddingBottom: "3rem",
-              backgroundColor: "#483078",
+              backgroundColor: isDarkTheme ? "#2D2D2D" : "#483078",
             }}
           >
             <BottomNavigationAction
               label="About"
               to={ROUTES.ABOUT}
+              component={Link}
               icon={<InfoIcon style={{ color: "#f9f8f7" }} />}
               style={{ color: "#f9f8f7" }}
             />
@@ -92,11 +97,11 @@ const FooterComponent = () => {
           <BottomNavigation
             showLabels
             value={value}
-            onChange={(newValue) => {
+            onChange={(event, newValue) => {
               setValue(newValue);
             }}
             style={{
-              backgroundColor: "#483078",
+              backgroundColor: isDarkTheme ? "#2D2D2D" : "#483078",
               paddingTop: "3rem",
               paddingBottom: "3rem",
             }}
@@ -129,7 +134,7 @@ const FooterComponent = () => {
               setValue(newValue);
             }}
             style={{
-              backgroundColor: "#483078",
+              backgroundColor: isDarkTheme ? "#2D2D2D" : "#483078",
               paddingTop: "3rem",
               paddingBottom: "3rem",
             }}
@@ -137,6 +142,7 @@ const FooterComponent = () => {
             <BottomNavigationAction
               label="Favorites"
               to={ROUTES.FAVORITE}
+              component={Link}
               icon={<FavoriteIcon style={{ color: "#f9f8f7" }} />}
               style={{ color: "#f9f8f7" }}
             />
@@ -151,6 +157,7 @@ const FooterComponent = () => {
             <BottomNavigationAction
               label="About"
               to={ROUTES.ABOUT}
+              component={Link}
               icon={<InfoIcon style={{ color: "#f9f8f7" }} />}
               style={{ color: "#f9f8f7" }}
             />
@@ -158,6 +165,7 @@ const FooterComponent = () => {
             <BottomNavigationAction
               label="CRM"
               to={ROUTES.CRM}
+              component={Link}
               icon={<PeopleAltIcon style={{ color: "#f9f8f7" }} />}
               style={{ color: "#f9f8f7" }}
             />

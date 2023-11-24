@@ -3,25 +3,29 @@ import {
   Box,
   List,
   ListItem,
-  ListItemButton,
   ListItemText,
   Divider,
   Drawer,
   Typography,
 } from "@mui/material";
-
-import { profileLinks, cardsLinkBusiness, alwaysLinks } from "../../myLinks";
+import {
+  profileLinks,
+  cardsLinkBusiness,
+  alwaysLinks,
+  cardsLinkRegular,
+} from "../../myLinks";
 import { useSelector } from "react-redux";
 import getIcon from "../../../service/iconsService";
 import Link from "@mui/material/Link";
 import { NavLink } from "react-router-dom";
+import "../../../App.css";
 
-const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
+const LeftDrawerComponent = ({ isOpen, onCloseDrawer, isDarkTheme }) => {
   const isLoggedIn = useSelector((store) => store.authSlice.loggedIn);
   const isBusiness = useSelector(
     (store) => store.authSlice.userData?.isBusiness
   );
-
+  const isAdmin = useSelector((store) => store.authSlice.userData?.isAdmin);
   const list = () => (
     <Box
       sx={{
@@ -30,7 +34,7 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
         flexShrink: 0,
         flexDirection: "column",
         height: "100%",
-        bgcolor: "#483078",
+        bgcolor: isDarkTheme ? "#121212" : "#483078",
       }}
       role="presentation"
       onClick={onCloseDrawer}
@@ -51,16 +55,15 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
         }}
       />
       <List>
-        {profileLinks(isLoggedIn).map((link) => (
-          <ListItem key={link.to} disablePadding>
-            <ListItemButton
-              component={Link}
-              to={link.to}
-              sx={{ color: "white" }}
-            >
-              <ListItemText primary={link.children} />
+        {profileLinks(isLoggedIn, isAdmin).map((link) => (
+          <ListItem key={link.to} disablePadding className="listItemLink">
+            <NavLink component={Link} to={link.to} className="navLink">
+              <ListItemText
+                primary={link.children}
+                sx={{ marginLeft: "1rem", marginBottom: "1rem" }}
+              />
               {getIcon(link.to)}
-            </ListItemButton>
+            </NavLink>
           </ListItem>
         ))}
       </List>
@@ -82,9 +85,12 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
           />
           <List>
             {cardsLinkBusiness.map((link) => (
-              <ListItem key={link.to} disablePadding>
-                <NavLink component={Link} to={link.to} sx={{ color: "white" }}>
-                  <ListItemText primary={link.children} />
+              <ListItem key={link.to} disablePadding className="listItemLink">
+                <NavLink component={Link} to={link.to} className="navLink">
+                  <ListItemText
+                    primary={link.children}
+                    sx={{ marginLeft: "1rem", marginBottom: "1rem" }}
+                  />
                   {getIcon(link.to)}
                 </NavLink>
               </ListItem>
@@ -92,7 +98,37 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
           </List>
         </>
       )}
-
+      {isLoggedIn && !isBusiness && (
+        <>
+          <Typography
+            variant="body1"
+            style={{ textAlign: "center", marginTop: "1rem", color: "white" }}
+          >
+            Cards
+          </Typography>
+          <Divider
+            sx={{
+              marginLeft: "1rem",
+              marginRight: "1rem",
+              marginTop: "1rem",
+              color: "white",
+            }}
+          />
+          <List>
+            {cardsLinkRegular.map((link) => (
+              <ListItem key={link.to} disablePadding className="listItemLink">
+                <NavLink component={Link} to={link.to} className="navLink">
+                  <ListItemText
+                    primary={link.children}
+                    sx={{ marginLeft: "1rem", marginBottom: "1rem" }}
+                  />
+                  {getIcon(link.to)}
+                </NavLink>
+              </ListItem>
+            ))}
+          </List>
+        </>
+      )}
       <Typography
         variant="body1"
         style={{ textAlign: "center", marginTop: "1rem", color: "white" }}
@@ -109,15 +145,14 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
       />
       <List>
         {alwaysLinks.map((link) => (
-          <ListItem key={link.to} disablePadding>
-            <ListItemButton
-              component={Link}
-              to={link.to}
-              sx={{ color: "white" }}
-            >
-              <ListItemText primary={link.children} />
+          <ListItem key={link.to} disablePadding className="listItemLink">
+            <NavLink component={Link} to={link.to} className="navLink">
+              <ListItemText
+                primary={link.children}
+                sx={{ marginLeft: "1rem", marginBottom: "1rem" }}
+              />
               {getIcon(link.to)}
-            </ListItemButton>
+            </NavLink>
           </ListItem>
         ))}
       </List>

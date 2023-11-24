@@ -54,7 +54,7 @@ const FavoritesPage = () => {
       );
       cardDeletedToast();
     } catch (err) {
-      console.log("Error from like card", err);
+      // console.log("Error from like card", err);
       warningToast("Something went wrong. Could not like the card.");
     }
   };
@@ -63,9 +63,7 @@ const FavoritesPage = () => {
       <Box
         sx={{ marginTop: "3rem", marginBottom: "3rem", textAlign: "center" }}
       >
-        <Typography variant="h3" sx={{ color: "#2d2c2b" }}>
-          Favorite Cards
-        </Typography>
+        <Typography variant="h3">Favorite Cards</Typography>
         <Typography variant="body1">
           Here you can find your favorite bussiness cards
         </Typography>

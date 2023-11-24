@@ -18,8 +18,16 @@ const cardsLinkBusiness = [
   { to: ROUTES.FAVORITE, children: "Favorites" },
 ];
 
-const profileLinks = (isLoggedIn) => {
-  if (isLoggedIn) {
+const cardsLinkRegular = [{ to: ROUTES.FAVORITE, children: "Favorites" }];
+
+const profileLinks = (isLoggedIn, isAdmin) => {
+  if (isAdmin) {
+    return [
+      { to: ROUTES.EDITPROFILE, children: "Edit Profile" },
+      { to: ROUTES.MYPROFILE, children: "Your Profile" },
+      { to: ROUTES.CRM, children: "CRM" },
+    ];
+  } else if (isLoggedIn) {
     return [
       { to: ROUTES.EDITPROFILE, children: "Edit Profile" },
       { to: ROUTES.MYPROFILE, children: "Your Profile" },
@@ -31,8 +39,6 @@ const profileLinks = (isLoggedIn) => {
     ];
   }
 };
-//TODO: Bring back the always link, cause there is bug
-//TODO: Left drawer component (make it as navigation center) - make links. Make two sections for profile related stuff and card related stuff. Ask Yonatan if ok, if NavBar link of be there (instead the Hamburger manu)
+
 export default myLinks;
-export { alwaysLinks, profileLinks, cardsLinkBusiness };
-//profileLinks, cardsLinkBusiness, alwaysLink;
+export { alwaysLinks, profileLinks, cardsLinkBusiness, cardsLinkRegular };

@@ -26,3 +26,14 @@ body {
   align-items: center;
   margin-top: 3rem;
 }
+.navLink {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.listItemLink {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

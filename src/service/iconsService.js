@@ -12,25 +12,37 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 const getIcon = (to) => {
   switch (to) {
     case ROUTES.LOGIN:
-      return <LoginIcon />;
+      return <LoginIcon sx={{ marginLeft: "6.5rem", marginBottom: "1rem" }} />;
     case ROUTES.REGISTER:
-      return <AppRegistrationIcon />;
+      return (
+        <AppRegistrationIcon
+          sx={{ marginLeft: "5.5rem", marginBottom: "1rem" }}
+        />
+      );
     case ROUTES.FAVORITE:
-      return <FavoriteIcon />;
+      return <FavoriteIcon sx={{ marginLeft: "5rem", marginBottom: "1rem" }} />;
     case ROUTES.MYCARDS:
-      return <BusinessCenterIcon />;
+      return (
+        <BusinessCenterIcon sx={{ marginLeft: "5rem", marginBottom: "1rem" }} />
+      );
     case ROUTES.ABOUT:
-      return <InfoIcon />;
+      return <InfoIcon sx={{ marginLeft: "6.5rem", marginBottom: "1rem" }} />;
     case ROUTES.EDITPROFILE:
-      return <ManageAccountsIcon />;
+      return (
+        <ManageAccountsIcon
+          sx={{ marginLeft: "4.5rem", marginBottom: "1rem" }}
+        />
+      );
     case ROUTES.CREATECARD:
-      return <AddIcon />;
+      return <AddIcon sx={{ marginLeft: "4rem", marginBottom: "1rem" }} />;
     case ROUTES.HOME:
-      return <HomeIcon />;
+      return <HomeIcon sx={{ marginLeft: "6.5rem", marginBottom: "1rem" }} />;
     case ROUTES.MYPROFILE:
-      return <Person2Icon />;
+      return <Person2Icon sx={{ marginLeft: "4rem", marginBottom: "1rem" }} />;
     case ROUTES.CRM:
-      return <PeopleAltIcon />;
+      return (
+        <PeopleAltIcon sx={{ marginLeft: "7.2rem", marginBottom: "1rem" }} />
+      );
 
     default:
       return null;

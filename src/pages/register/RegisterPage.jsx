@@ -63,7 +63,6 @@ const RegisterPage = () => {
       successfullRegistration();
       navigate(ROUTES.LOGIN);
     } catch (err) {
-      // console.log(err);
       registerToast(err.response.data);
     }
   };

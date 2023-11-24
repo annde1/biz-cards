@@ -1,75 +1,71 @@
-# Getting Started with Create React App
+# Project Name
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Business Card System
 
-## Available Scripts
+### Overview
 
-In the project directory, you can run:
+The Business Card System is a web application that allows business users to showcase their business cards. Regular users can view cards, like them, and access basic details. Business users, on the other hand, have additional functionalities such as editing and deleting their own cards. The system provides a user-friendly interface, ensuring a seamless experience for both regular and business users.
 
-### `npm i`
+### Features
 
-when we download the project for the first time
-we must execute npm i to install all dependencies
+#### Business User Features
 
-### `npm start`
+Create, Edit, and Delete Cards:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Business users can create new business cards, providing details about their businesses.
+They can edit the details of their existing cards to keep information up to date.
+The delete option allows users to remove their cards from the system.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Profile Area:
 
-### `npm test`
+Edit Profile: Users can update their personal information and change their business status.
+Delete Profile: Users have the option to permanently delete their profile from the system.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Regular User Features
 
-### `npm run build`
+View Cards:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Regular users can browse and view cards created by business users.
+Clicking on the info icon displays a modal with additional details about the business.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Like Cards:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Regular users can like cards, adding them to their favorite cards page.
+Profile Area:
 
-### `npm run eject`
+Edit Profile: Non-business users can update their personal information.
+Admin Features
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### CRM Section:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Admin users have access to a CRM section where they can view a list of all users in the system along with their details.
+They can update the business status of users and delete user profiles.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### Technologies Used
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+React Library: Used for building a responsive and interactive user interface.
+Axios Requests: Utilized for making asynchronous requests to the server.
+Conditional Rendering: Implemented to show or hide features based on user roles.
+LocalStorage/SessionStorage: User login status is stored locally or session-wise based on user preference.
+Custom Hooks: Developed to encapsulate common functionality and reuse code.
+Toastify Service: Integrated for providing user feedback through toast notifications.
+React Router: Implemented for navigation within the application.
 
-## Learn More
+### Getting Started
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Clone the Repository
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+git clone https://github.com/annde1/business-card-system.git
+cd business-card-system
 
-### Code Splitting
+#### Install Dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+npm install
 
-### Analyzing the Bundle Size
+#### Run the Application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+npm start
 
-### Making a Progressive Web App
+#### Access the Application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Open your browser and navigate to http://localhost:3000.

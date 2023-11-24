@@ -190,6 +190,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       <LeftDrawerComponent
         isOpen={isOpen}
         onCloseDrawer={handleCloseDrawerClick}
+        isDarkTheme={isDarkTheme}
       />
     </Box>
   );
